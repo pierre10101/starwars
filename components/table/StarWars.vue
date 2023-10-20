@@ -1,50 +1,17 @@
+<script setup lang="ts">
+const test = (event) => {
+    console.log(event)
+}
+</script>
+
 <template>
-    <!-- Contents of Table -->
-    <div class="py-6 px-8 md:px-12 mb-2 border border-starwars-yellow bg-transparent rounded-xl">
-        <div>
-            <div class="flex flex-wrap -mx-3 items-center">
-                <div class="w-full xl:w-auto px-3 mb-4 xl:mb-0">
-                    <span class="text-3xl font-heading font-semibold text-starwars-yellow">Sort by</span>
-                </div>
-                <div class="w-full md:w-1/2 xl:w-auto px-3 mb-2 md:mb-0">
-                    <div class="relative border border-starwars-yellow bg-transparent">
-                        <select
-                            class="relative text-starwars-yellow w-full xl:w-67 pl-6 pr-12 pt-4 pb-3 text-xs font-semibold bg-transparent outline-none appearance-none cursor-pointer"
-                            name="" id="">
-                            <option class="text-black" value="">New users</option>
-                            <option class="text-black" value="">Progress</option>
-                            <option class="text-black" value="">Date</option>
-                        </select>
-                        <span class="absolute top-1/2 right-0 transform -translate-y-1/2 mr-6">
-                            <svg width="11" height="7" viewbox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10.6641 1.30503L9.72073 0.361694L5.9974 4.08503L5.33073 4.80505L4.66406 4.08503L0.94073 0.361694L-0.00260357 1.30503L5.33073 6.63836L10.6641 1.30503Z"
-                                    fill="#04082F"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="w-full md:w-1/2 xl:w-auto px-3 relative">
-                    <div class="relative border border-starwars-yellow bg-transparent">
-                        <select
-                            class="relative text-starwars-yellow w-full xl:w-67 pl-6 pr-12 pt-4 pb-3 text-xs font-semibold bg-transparent outline-none appearance-none cursor-pointer"
-                            name="" id="">
-                            <option class="text-black" value="">Years</option>
-                            <option class="text-black" value="">Months</option>
-                            <option class="text-black" value="">Time</option>
-                        </select>
-                        <span class="absolute top-1/2 right-0 transform -translate-y-1/2 mr-6">
-                            <svg width="11" height="7" viewbox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10.6641 1.30503L9.72073 0.361694L5.9974 4.08503L5.33073 4.80505L4.66406 4.08503L0.94073 0.361694L-0.00260357 1.30503L5.33073 6.63836L10.6641 1.30503Z"
-                                    fill="#04082F"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <select-star-wars @option="test($event)" :selectData="[{
+        data: [{
+            text: 'Test',
+            value: 'test'
+        }],
+        field: 'Films'
+    }]" />        
     <!-- Table -->
     <div class="w-full overflow-x-auto">
         <table class="w-full min-w-max">
@@ -52,7 +19,6 @@
                 <tr>
                     <th class="p-0">
                         <div class="h-16 pl-8 pr-6 flex items-center rounded-tl-xl">
-                            <input type="checkbox" value="" id="">
                             <label class="ml-4 text-lg font-semibold" for="">Name</label>
                         </div>
                     </th>
@@ -92,7 +58,6 @@
                 <tr class="text-starwars-yellow border border-starwars-yellow">
                     <td class="p-0">
                         <div class="flex h-20 items-center w-full pl-8 bg-transparent">
-                            <input type="checkbox" value="" id="">
                             <div class="flex ml-4 items-center">
                                 <img class="h-9 w-9" src="https://placehold.co/600x400/png" alt="">
                                 <div class="ml-4">
@@ -173,16 +138,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <!-- Table LoadMore -->
-    <div class="pt-10 px-8 pb-14 text-center bg-transparent border border-starwars-yellow rounded-b-xl">
-        <a class="group relative inline-block h-12 w-full sm:w-64 bg-blueGray-900 rounded" href="#">
-            <div
-                class="absolute top-0 left-0 transform -translate-y-1 -translate-x-1 w-full h-full group-hover:translate-y-0 group-hover:translate-x-0 transition duration-300">
-                <div class="flex h-full w-full items-center justify-center bg-transparent border-2 border-starwars-yellow">
-                    <span class="text-base text-starwars-yellow font-semibold uppercase">See more</span>
-                </div>
-            </div>
-        </a>
     </div>
 </template>
