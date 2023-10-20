@@ -1,30 +1,16 @@
 <script setup lang="ts">
 export interface Props {
-    selectData?: Record<string, [{
-        data?: Record<string, [{
+    selectData: {
+        data: {
             text: string;
             value: string;
-        }]>;
-        field?: string;
-    }]>;
+        }[];
+        field: string;
+    }[]
 }
 
-const { selectData } = withDefaults(defineProps<Props>(), {
-    selectData: [{
-        data: [
-            {
-                text: '',
-                value: ''
-            }
-        ],
-        field: 'test'
-    }]
-})
-const emit = defineEmits('option')
-
-onMounted(() => {
-    console.log(selectData)
-})
+const { selectData } = defineProps<Props>();
+const emit = defineEmits(['option'])
 
 </script>
 
@@ -38,11 +24,11 @@ onMounted(() => {
                 <div>
                     <div class="relative border border-starwars-yellow bg-transparent">
                         <select v-for="(selectOption, selectIndex) in selectData" :key="selectIndex"
-                            @change="emit('option', $event.target.value)"
-                            class="relative text-starwars-yellow w-full xl:w-67 pl-6 pr-6 pt-4 pb-3 text-md font-semibold bg-transparent outline-none appearance-none cursor-pointer">
+                            @change="emit('option', $event.target)"
+                            class="relative text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent outline-none appearance-none cursor-pointer">
                             <option disabled selected>{{ selectOption.field.toUpperCase() }}</option>
-                            <option v-for="(option, optionIndex) in selectOption.data" :key="optionIndex"
-                                class="text-black" :value="option.value">{{ option.text }}</option>
+                            <option v-for="(option, optionIndex) in selectOption.data" :key="optionIndex" class="text-black"
+                                :value="option.value">{{ option.text }}</option>
                         </select>
                     </div>
                 </div>
@@ -50,5 +36,4 @@ onMounted(() => {
         </div>
     </div>
 </template>
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,5 +1,5 @@
 <script setup>
-const emit = defineEmits('start','skip')
+const emit = defineEmits(['start','skip'])
 </script>
 <template>
     <div class="flex items-center justify-center h-screen bg-stars bg-center">

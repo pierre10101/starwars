@@ -1,17 +1,33 @@
 <script setup lang="ts">
-const test = (event) => {
-    console.log(event)
+import { vIntersectionObserver } from '@vueuse/components'
+import { IFilm } from 'nuxt-swapi/dist/runtime/types';
+const { Films } = useSwapi();
+const options = ref<string[]>([]);
+const films = ref();
+const isLoading = ref(true);
+const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
+    if (entries[0].isIntersecting && films !== undefined) {
+        films.value = films.value.concat((await Films.getPage<IFilm>(1)).data);
+    }
+};
+const catchOption = (event: { target: string; }) => {
+    options.value.push(event.target);
 }
+onMounted(async () => {
+    films.value = (await Films.getPage<IFilm>()).data;
+    isLoading.value = false;
+})
 </script>
 
 <template>
-    <select-star-wars @option="test($event)" :selectData="[{
+    <loader-star-wars v-if="isLoading" />
+    <select-star-wars @option="catchOption($event)" :selectData="[{
         data: [{
             text: 'Test',
             value: 'test'
         }],
         field: 'Films'
-    }]" />        
+    }]" />
     <!-- Table -->
     <div class="w-full overflow-x-auto">
         <table class="w-full min-w-max">
@@ -48,14 +64,14 @@ const test = (event) => {
                         </div>
                     </th>
                     <th class="p-0">
-                        <div
-                            class="h-16 flex items-center justify-center rounded-tr-xl">
+                        <div class="h-16 flex items-center justify-center rounded-tr-xl">
                         </div>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="text-starwars-yellow border border-starwars-yellow">
+                <tr v-intersection-observer="handleInfinityScroll"
+                    class="text-starwars-yellow border border-starwars-yellow">
                     <td class="p-0">
                         <div class="flex h-20 items-center w-full pl-8 bg-transparent">
                             <div class="flex ml-4 items-center">

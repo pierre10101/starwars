@@ -13,11 +13,12 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "nuxt": "^3.7.4",
-    "nuxt-swapi": "^1.0.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@vueuse/nuxt": "^10.5.0"
+    "@vueuse/components": "^10.5.0",
+    "@vueuse/nuxt": "^10.5.0",
+    "nuxt-swapi": "^1.0.10"
   }
 }
