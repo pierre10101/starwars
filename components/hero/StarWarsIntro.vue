@@ -8,18 +8,22 @@ export interface Props {
 }
 
 const router = useRouter()
-const audio = ref()
-const { playing, currentTime, duration, volume,   } = useMediaControls(audio, { 
+const audioRef = ref()
+const mainRef = ref();
+const { playing, currentTime, duration, volume, } = useMediaControls(audioRef, {
   src: starWarsThemeSong,
 })
 
 onMounted(async () => {
-  volume.value = 1
-  await audio.value
-  playing.value = true;
+  volume.value = 0.75
   setTimeout(() => {
+    playing.value = true;
+  }, 2000)
+  setTimeout(() => {
+    playing.value = false;
     router.push('/admin')
-  },60000)
+  }, 62500)
+  mainRef.value.focus()
 })
 
 const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
@@ -29,11 +33,11 @@ const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <audio ref="audio" />
-  <main class="star-wars-intro">
+  <audio ref="audioRef" />
+  <main ref="mainRef" tabindex="0"  @keyup.space="playing = false, $router.push(navigationButtonLink)" class="star-wars-intro">
     <!-- Blue Intro Text -->
     <h1 class="intro-text">
-      In a galaxy far far away..
+      In a galaxy far far away.. (hint: press enter to skip)
     </h1>
 
     <!-- Logo Image or Text goes in here -->
@@ -56,8 +60,9 @@ const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
         </p>
 
         <!-- button or link or whatever -->
-        <NuxtLink :to="navigationButtonLink" class="space-button cursor-pointer">Away we go!</NuxtLink>
-
+        <button class="space-button cursor-pointer" @click="playing = false, $router.push(navigationButtonLink)">
+          See More
+        </button>
       </article>
     </section>
   </main>
