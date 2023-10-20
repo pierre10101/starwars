@@ -1,5 +1,9 @@
 <template>
-
-<h1>For now there is nothing</h1>
-
+    <div class="bg-darth">
+        <section class="relative py-20 md:py-40 bg-yellowGray-500">
+            <div class="container px-4 mx-auto">
+                <table-star-wars />
+            </div>
+        </section>
+    </div>
 </template>

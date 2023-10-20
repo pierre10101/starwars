@@ -7,7 +7,8 @@ export default {
         'starwars-yellow': '#EBD71C',
       },
       backgroundImage: {
-        'stars': "url('~/assets/img/stars-bg.jpg')"
+        'stars': "url('~/assets/img/stars-bg.jpg')",
+        'darth': "url('~/assets/img/darth-bg.jpeg')"
       }
     },
   },

@@ -4,7 +4,7 @@ const isIntro = ref(true);
 
 <template>
     <div>
-        <modal-intro v-if="isIntro" @start="isIntro = false" @skip="$router.push('/admin')" />
-        <hero-star-wars-intro v-else />
+        <modal-star-wars v-if="isIntro" @start="isIntro = false" @skip="$router.push('/admin')" />
+        <hero-star-wars v-else />
     </div>
 </template>

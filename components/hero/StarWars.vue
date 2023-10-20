@@ -37,7 +37,7 @@ const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
   <main ref="mainRef" tabindex="0"  @keyup.space="playing = false, $router.push(navigationButtonLink)" class="star-wars-intro">
     <!-- Blue Intro Text -->
     <h1 class="intro-text">
-      In a galaxy far far away.. (hint: press enter to skip)
+      In a galaxy far far away.. (hint: press space to skip)
     </h1>
 
     <!-- Logo Image or Text goes in here -->
