@@ -1,33 +1,35 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from '@vueuse/components'
-import { IFilm } from 'nuxt-swapi/dist/runtime/types';
-const { Films } = useSwapi();
+import { IPeople, IPlanet } from 'nuxt-swapi/dist/runtime/types';
+
 const options = ref<string[]>([]);
-const films = ref();
+const selectData = await useSelectDynamicComputed();
 const isLoading = ref(true);
+const {People, Planets} = useSwapi();
+const { people, planets } = await useSelectDynamicState();
+
 const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
-    if (entries[0].isIntersecting && films !== undefined) {
-        films.value = films.value.concat((await Films.getPage<IFilm>(1)).data);
-    }
+    // Add data when intersection reached. Not relevant as 6 movies in total. 
 };
-const catchOption = (event: { target: string; }) => {
-    options.value.push(event.target);
+const selectDynamicOption = (event: { value: string; }) => {
+    options.value.push(event.value);
 }
+
 onMounted(async () => {
-    films.value = (await Films.getPage<IFilm>()).data;
-    isLoading.value = false;
+  if (people.value.length === 0) {
+    people.value = (await People.getAll()) as IPeople[];
+  }
+  if (planets.value.length === 0) {
+    planets.value = (await Planets.getAll()) as IPlanet[];
+  }
+  isLoading.value = false;
 })
+
 </script>
 
 <template>
-    <loader-star-wars v-if="isLoading" />
-    <select-star-wars @option="catchOption($event)" :selectData="[{
-        data: [{
-            text: 'Test',
-            value: 'test'
-        }],
-        field: 'Films'
-    }]" />
+    <loader-darth-vader v-if="isLoading" />
+    <select-dynamic @option="selectDynamicOption" :selectData="selectData" />
     <!-- Table -->
     <div class="w-full overflow-x-auto">
         <table class="w-full min-w-max">

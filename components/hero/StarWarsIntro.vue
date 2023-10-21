@@ -10,7 +10,7 @@ export interface Props {
 const router = useRouter()
 const audioRef = ref()
 const mainRef = ref();
-const { playing, currentTime, duration, volume, } = useMediaControls(audioRef, {
+const { playing, volume, } = useMediaControls(audioRef, {
   src: starWarsThemeSong,
 })
 
