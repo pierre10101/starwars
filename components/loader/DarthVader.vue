@@ -35,7 +35,7 @@ onMounted(() => {
                         tileWidth,
                         tileHeight,
                         0,
-                        0,
+                        100,
                         tileWidth,
                         tileHeight
                     );

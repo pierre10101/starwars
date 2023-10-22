@@ -1,6 +1,12 @@
 <script setup lang="ts">
 export interface Props {
-    selectData: any[]
+    selectData: {
+        data: {
+            text: string;
+            value: string;
+        }[];
+        field: string;
+    }[]
 }
 
 const { selectData } = defineProps<Props>();
@@ -16,13 +22,13 @@ const emit = defineEmits(['option'])
                     <span class="text-3xl font-heading font-semibold text-starwars-yellow">Sort by</span>
                 </div>
                 <div>
-                    <div class="relative flex flex-row">
+                    <div class="flex flex-row">
                         <select v-for="(selectOption, selectIndex) in selectData" :key="selectIndex"
                             @change="emit('option', $event.target)"
-                            class="relative border border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent outline-none appearance-none cursor-pointer">
+                            class="border border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent outline-none appearance-none cursor-pointer">
                             <option disabled selected>{{ selectOption.field.toUpperCase() }}</option>
                             <option v-for="(option, optionIndex) in selectOption.data" :key="optionIndex"
-                                :value="option.value">{{ option.text }}</option>
+                                :value="`${selectOption.field.toUpperCase()}/${option.value}`">{{ option.text }}</option>
                         </select>
                     </div>
                 </div>

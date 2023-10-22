@@ -1,28 +1,40 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from '@vueuse/components'
-import { IPeople, IPlanet } from 'nuxt-swapi/dist/runtime/types';
+import { IFilm, IPeople, IPlanet } from 'nuxt-swapi/dist/runtime/types';
 
-const options = ref<string[]>([]);
+interface Options {
+  [key: string]: any;
+}
+
+const options = ref<Options>({});
 const selectData = await useSelectDynamicComputed();
 const isLoading = ref(true);
-const {People, Planets} = useSwapi();
-const { people, planets } = await useSelectDynamicState();
+const { People, Planets, Films } = useSwapi();
+const { people, planets, films } = await useStarWarsApiState();
 
 const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
     // Add data when intersection reached. Not relevant as 6 movies in total. 
 };
-const selectDynamicOption = (event: { value: string; }) => {
-    options.value.push(event.value);
+const selectDynamicOption = async (event: { value: string }) => {
+    console.log(event.value)
+    const [index,value] = event.value.split('/');
+    options.value[index] = value;
+    isLoading.value = true;
+    films.value = (await Films.findBySearch(Object.values(options.value))) as IFilm[];
+    isLoading.value = false;
 }
 
 onMounted(async () => {
-  if (people.value.length === 0) {
-    people.value = (await People.getAll()) as IPeople[];
-  }
-  if (planets.value.length === 0) {
-    planets.value = (await Planets.getAll()) as IPlanet[];
-  }
-  isLoading.value = false;
+    if (films.value.length === 0) {
+        films.value = (await Films.getAll()) as IFilm[];
+    }
+    if (people.value.length === 0) {
+        people.value = (await People.getAll()) as IPeople[];
+    }
+    if (planets.value.length === 0) {
+        planets.value = (await Planets.getAll()) as IPlanet[];
+    }
+    isLoading.value = false;
 })
 
 </script>

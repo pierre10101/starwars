@@ -1,7 +1,7 @@
 import { type IPeople, type IPlanet } from "nuxt-swapi/dist/runtime/types";
 
 export default async function useSelectDynamicData() {
-  const { people, planets } = await useSelectDynamicState();
+  const { people, planets } = await useStarWarsApiState();
   return computed(() => {
     const computedPeople = () => {
       if (Array.isArray(people.value)) {
