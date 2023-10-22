@@ -28,7 +28,7 @@ const emit = defineEmits(['option'])
                             class="border border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent outline-none appearance-none cursor-pointer">
                             <option disabled selected>{{ selectOption.field.toUpperCase() }}</option>
                             <option v-for="(option, optionIndex) in selectOption.data" :key="optionIndex"
-                                :value="`${selectOption.field.toUpperCase()}/${option.value}`">{{ option.text }}</option>
+                                :value="`${selectOption.field}/${option.value}`">{{ option.text }}</option>
                         </select>
                     </div>
                 </div>

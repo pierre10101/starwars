@@ -1,28 +1,64 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from '@vueuse/components'
-import { IFilm, IPeople, IPlanet } from 'nuxt-swapi/dist/runtime/types';
+import { IFilm, IPeople, IPlanet, Resource } from 'nuxt-swapi/dist/runtime/types';
 
-interface Options {
-  [key: string]: any;
-}
-
-const options = ref<Options>({});
 const selectData = await useSelectDynamicComputed();
 const isLoading = ref(true);
 const { People, Planets, Films } = useSwapi();
-const { people, planets, films } = await useStarWarsApiState();
+const { people, planets, films, options } = await useStarWarsApiState();
 
 const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
     // Add data when intersection reached. Not relevant as 6 movies in total. 
 };
 const selectDynamicOption = async (event: { value: string }) => {
-    console.log(event.value)
-    const [index,value] = event.value.split('/');
+    const [index, value] = event.value.split('/');
     options.value[index] = value;
-    isLoading.value = true;
-    films.value = (await Films.findBySearch(Object.values(options.value))) as IFilm[];
+    isLoading.value = true
+    films.value = (await Films.findByUrl(urls.value)) as unknown as IFilm
     isLoading.value = false;
 }
+interface Options {
+    [key: string]: any;
+}
+const urls = computed(() => {
+    const planetUrls: Options = {};
+    const peopleUrls: Options = {};
+    const object: any[] = [];
+    if ("Planets" in options.value && planets.value.length > 0) {
+        const items = planets.value.filter((value) => value.name === options.value["Planets"]).map((value) => value.films);
+        for (const films of items) {
+            for (const film of films) {
+                planetUrls[film as string] = film;
+            }
+        }
+        object.push(planetUrls);
+    }
+    if ("People" in options.value && people.value.length > 0) {
+        const items = people.value.filter((value) => value.name === options.value["People"]).map((value) => value.films);
+        for (const films of items) {
+            for (const film of films) {
+                peopleUrls[film as string] = film;
+            }
+        }
+        object.push(peopleUrls)
+    }
+    const intersection = (...objects:any) => {
+        if (objects.length === 1) {
+            return objects[0];
+        }
+        const result:any = {};
+        const [firstObject, ...restObjects] = objects;
+
+        for (let key in firstObject) {
+            if (restObjects.every((obj:any) => obj.hasOwnProperty(key))) {
+                result[key] = firstObject[key];
+            }
+        }
+        return result;
+    }
+    
+    return Object.keys(intersection(...object))
+})
 
 onMounted(async () => {
     if (films.value.length === 0) {
