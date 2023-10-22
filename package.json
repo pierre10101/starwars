@@ -19,6 +19,6 @@
   "dependencies": {
     "@vueuse/components": "^10.5.0",
     "@vueuse/nuxt": "^10.5.0",
-    "nuxt-swapi": "^1.0.13"
+    "nuxt-swapi": "^1.0.15"
   }
 }

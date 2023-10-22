@@ -14,7 +14,10 @@ const selectDynamicOption = async (event: { value: string }) => {
     const [index, value] = event.value.split('/');
     options.value[index] = value;
     isLoading.value = true
-    films.value = (await Films.findByUrl(urls.value)) as unknown as IFilm
+    const result = (await Films.findByUrl(urls.value));
+    if (result) {
+        films.value = result;
+    }
     isLoading.value = false;
 }
 interface Options {

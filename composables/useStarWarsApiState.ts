@@ -9,7 +9,7 @@ export default async function useSelectDynamicState() {
   const planets = useStorage<IPlanet[] | []>("star_wars_planets", []);
   const starships = useStorage("star_wars_starships", []);
   const vehicles = useStorage("star_wars_vehicles", []);
-  const films = useStorage<IFilm[] | []>("star_wars_films", []);
+  const films = useStorage<(IFilm | null)[]>("star_wars_films", []);
   const options = ref<Options>({});
   return {
     people,
