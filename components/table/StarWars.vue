@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from '@vueuse/components'
-import { IFilm, IPeople, IPlanet, Resource } from 'nuxt-swapi/dist/runtime/types';
+import { IFilm, IPeople, IPlanet } from 'nuxt-swapi/dist/runtime/types';
 
 const selectData = await useSelectDynamicComputed();
 const isLoading = ref(true);
 const { People, Planets, Films } = useSwapi();
-const { people, planets, films, options } = await useStarWarsApiState();
+const { people, planets, films, options, urls } = await useStarWarsApiState();
 
 const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
     // Add data when intersection reached. Not relevant as 6 movies in total. 
@@ -20,48 +20,6 @@ const selectDynamicOption = async (event: { value: string }) => {
     }
     isLoading.value = false;
 }
-interface Options {
-    [key: string]: any;
-}
-const urls = computed(() => {
-    const planetUrls: Options = {};
-    const peopleUrls: Options = {};
-    const object: any[] = [];
-    if ("Planets" in options.value && planets.value.length > 0) {
-        const items = planets.value.filter((value) => value.name === options.value["Planets"]).map((value) => value.films);
-        for (const films of items) {
-            for (const film of films) {
-                planetUrls[film as string] = film;
-            }
-        }
-        object.push(planetUrls);
-    }
-    if ("People" in options.value && people.value.length > 0) {
-        const items = people.value.filter((value) => value.name === options.value["People"]).map((value) => value.films);
-        for (const films of items) {
-            for (const film of films) {
-                peopleUrls[film as string] = film;
-            }
-        }
-        object.push(peopleUrls)
-    }
-    const intersection = (...objects:any) => {
-        if (objects.length === 1) {
-            return objects[0];
-        }
-        const result:any = {};
-        const [firstObject, ...restObjects] = objects;
-
-        for (let key in firstObject) {
-            if (restObjects.every((obj:any) => obj.hasOwnProperty(key))) {
-                result[key] = firstObject[key];
-            }
-        }
-        return result;
-    }
-    
-    return Object.keys(intersection(...object))
-})
 
 onMounted(async () => {
     if (films.value.length === 0) {
@@ -76,11 +34,17 @@ onMounted(async () => {
     isLoading.value = false;
 })
 
+const reload = async () => {
+    isLoading.value = true;
+    films.value = (await Films.getAll()) as IFilm[];
+    window.location.reload()
+}
+
 </script>
 
 <template>
     <loader-darth-vader v-if="isLoading" />
-    <select-dynamic @option="selectDynamicOption" :selectData="selectData" />
+    <select-dynamic @option="selectDynamicOption" :selectData="selectData" @reset="reload()"/>
     <!-- Table -->
     <div class="w-full overflow-x-auto">
         <table class="w-full min-w-max">
@@ -93,27 +57,17 @@ onMounted(async () => {
                     </th>
                     <th class="p-0">
                         <div class="h-16 pl-8 flex items-center">
-                            <span>Total</span>
+                            <span>Director</span>
                         </div>
                     </th>
                     <th class="p-0">
                         <div class="h-16 pl-8 flex items-center">
-                            <span>Progress</span>
+                            <span>Release Date</span>
                         </div>
                     </th>
                     <th class="p-0">
                         <div class="h-16 pl-8 flex items-center">
-                            <span>Date added</span>
-                        </div>
-                    </th>
-                    <th class="p-0">
-                        <div class="h-16 pl-8 flex items-center">
-                            <span>Premium</span>
-                        </div>
-                    </th>
-                    <th class="p-0">
-                        <div class="h-16 pl-8 flex items-center">
-                            <span>Country</span>
+                            <span>Description</span>
                         </div>
                     </th>
                     <th class="p-0">
@@ -123,56 +77,37 @@ onMounted(async () => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-intersection-observer="handleInfinityScroll"
-                    class="text-starwars-yellow border border-starwars-yellow">
+                <tr @click="$router.push(`/admin/display?id=${film?.episode_id}`)" v-intersection-observer="handleInfinityScroll" v-for="(film,index) in films" :key="index"
+                    class="cursor-pointer border border-starwars-yellow text-white">
                     <td class="p-0">
                         <div class="flex h-20 items-center w-full pl-8 bg-transparent">
                             <div class="flex ml-4 items-center">
-                                <img class="h-9 w-9" src="https://placehold.co/600x400/png" alt="">
+                                <img class="h-9 w-9" :src="`/img/${film?.title.replace(/\s+/g, '_')}.jpg`" alt="">
                                 <div class="ml-4">
-                                    <h4 class="text-base font-semibold leading-none">Elena
-                                        Manolera
-                                        Strizer</h4>
-                                    <span class="text-xs font-normal">elenas@email.com</span>
+                                    <h4 class="text-base font-semibold leading-none">
+                                    {{ film?.title }}
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                     </td>
                     <td class="p-0">
                         <div class="flex h-20 pl-8 items-center ">
-                            <span class="text-xs  font-normal">3,578.00</span>
-                        </div>
-                    </td>
-                    <td class="p-0">
-                        <div class="flex h-20 pl-8 items-center ">
-                            <div class="h-1 w-24 bg-gray-900">
-                                <div class="h-full w-4/6 bg-blue-500"></div>
-                            </div>
+                            <span class="text-xs  font-normal">{{ film?.director }}</span>
                         </div>
                     </td>
                     <td class="p-0">
                         <div class="flex h-20 pl-8 items-center">
-                            <span class="text-xs  font-normal">14 Sep, 2022</span>
-                        </div>
-                    </td>
-                    <td class="p-0">
-                        <div class="flex h-20 pl-8 items-center justify-center w-full ">
-                            <svg width="32" height="32" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="32" height="32" rx="16" fill="#EBD71C"></rect>
-                                <rect x="22.9531" y="9.63599" width="2" height="16" rx="1"
-                                    transform="rotate(45 22.9531 9.63599)" fill="black"></rect>
-                                <rect x="7.625" y="17.0431" width="2" height="7.57417" rx="1"
-                                    transform="rotate(-45 7.625 17.0431)" fill="black"></rect>
-                            </svg>
+                            <span class="text-xs  font-normal">{{ film?.release_date }}</span>
                         </div>
                     </td>
                     <td class="p-0">
                         <div class="flex h-20 pl-8 items-center ">
-                            <span class="text-xs font-normal">England</span>
+                            <span class="text-xs font-normal">{{ film?.opening_crawl.slice(0,100) }}..</span>
                         </div>
                     </td>
                     <td class="p-0">
-                        <div class="flex h-20 px-12 items-center justify-center ">
+                        <div  @click="$router.push(`/admin/display?id=${film?.episode_id}`)" class="flex h-20 px-12 items-center justify-center ">
                             <a class="group inline-flex items-center font-base text-starwars-yellow font-semibold" href="#">
                                 <span class="mr-2">More</span>
                                 <div class="relative transition duration-500 animate-pulse">

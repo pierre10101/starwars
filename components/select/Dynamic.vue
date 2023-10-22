@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const { selectData } = defineProps<Props>();
-const emit = defineEmits(['option'])
+const emit = defineEmits(['option', 'reset'])
 
 </script>
 
@@ -31,6 +31,9 @@ const emit = defineEmits(['option'])
                                 :value="`${selectOption.field}/${option.value}`">{{ option.text }}</option>
                         </select>
                     </div>
+                </div>
+                <div class="cursor-pointer rounded border border-starwars-yellow w-full xl:w-auto px-3 mb-4 xl:mb-0 ml-auto">
+                    <span @click="emit('reset')" class="text-3xl font-heading font-semibold text-starwars-yellow">Reset</span>
                 </div>
             </div>
         </div>
