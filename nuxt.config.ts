@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: process.env.NODE_ENV === 'development' ? false : true,
   devtools: {
     enabled: true,
     timeline: {
