@@ -4,14 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        'starwars-yellow': '#FFE81F',
+        "starwars-yellow": "#FFE81F",
       },
       backgroundImage: {
-        'stars': "url('~/assets/img/stars-bg.jpg')",
-        'darth': "url('~/assets/img/darth-bg.jpeg')"
-      }
+        stars: "url('~/assets/img/stars-bg.jpg')",
+        darth: "url('~/assets/img/darth-bg.jpeg')",
+      },
     },
   },
   plugins: [],
-}
-
+};

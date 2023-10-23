@@ -1,40 +1,43 @@
-
 <script setup lang="ts">
-import starWarsThemeSong from '~/assets/sound/star-wars-theme-song.mp3'
-import { useMediaControls } from '@vueuse/core'
+import starWarsThemeSong from "~/assets/sound/star-wars-theme-song.mp3";
+import { useMediaControls } from "@vueuse/core";
 
 export interface Props {
-  navigationButtonLink?: string
+  navigationButtonLink?: string;
 }
 
-const router = useRouter()
-const audioRef = ref()
+const router = useRouter();
+const audioRef = ref();
 const mainRef = ref();
-const { playing, volume, } = useMediaControls(audioRef, {
+const { playing, volume } = useMediaControls(audioRef, {
   src: starWarsThemeSong,
-})
+});
 
 onMounted(async () => {
-  volume.value = 0.75
+  volume.value = 0.75;
   setTimeout(() => {
     playing.value = true;
-  }, 2000)
+  }, 2000);
   setTimeout(() => {
     playing.value = false;
-    router.push('/admin')
-  }, 62500)
-  mainRef.value.focus()
-})
+    router.push("/admin");
+  }, 62500);
+  mainRef.value.focus();
+});
 
 const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
-  navigationButtonLink: '/admin',
-})
-
+  navigationButtonLink: "/admin",
+});
 </script>
 
 <template>
   <audio ref="audioRef" />
-  <main ref="mainRef" tabindex="0"  @keyup.space="playing = false, $router.push(navigationButtonLink)" class="star-wars-intro">
+  <main
+    ref="mainRef"
+    tabindex="0"
+    @keyup.space="(playing = false), $router.push(navigationButtonLink)"
+    class="star-wars-intro"
+  >
     <!-- Blue Intro Text -->
     <h1 class="intro-text">
       In a galaxy far far away.. (hint: press space to skip)
@@ -42,25 +45,28 @@ const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
 
     <!-- Logo Image or Text goes in here -->
     <h2 class="main-logo">
-      <img src="~/assets/img/star-wars-logo.svg">
+      <img src="~/assets/img/star-wars-logo.svg" />
     </h2>
 
     <!-- All Scrolling Content Goes in here -->
     <section class="main-content">
-
       <article class="title-content">
         <p class="content-header">EPISODES I-VII<br />A Movie Marathon</p>
 
-        <br>
+        <br />
 
         <p class="content-body">
-          After years of galactic silence, civilization is on the brink of a new Star Wars release. Now, with the Force
-          preparing to awaken, the people of Earth seek solace in films of old. With nowhere to turn, they gather in great
-          numbers and watch the original trilogy without rest.
+          After years of galactic silence, civilization is on the brink of a new
+          Star Wars release. Now, with the Force preparing to awaken, the people
+          of Earth seek solace in films of old. With nowhere to turn, they
+          gather in great numbers and watch the original trilogy without rest.
         </p>
 
         <!-- button or link or whatever -->
-        <button class="space-button cursor-pointer" @click="playing = false, $router.push(navigationButtonLink)">
+        <button
+          class="space-button cursor-pointer"
+          @click="(playing = false), $router.push(navigationButtonLink)"
+        >
           See More
         </button>
       </article>
@@ -90,7 +96,7 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
   margin: 0px;
   font-family: "Droid Sans", arial, verdana, sans-serif;
   font-weight: 700;
-  color: #EBD71C;
+  color: #ebd71c;
   background-color: #000;
   overflow: hidden;
   position: relative;
@@ -131,16 +137,20 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
 
 .star-wars-intro .main-content:after {
   position: absolute;
-  content: ' ';
+  content: " ";
   top: 0;
   bottom: 60%;
-  background-image: linear-gradient(to left top, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  background-image: linear-gradient(
+    to left top,
+    rgba(0, 0, 0, 1) 0%,
+    transparent 100%
+  );
   pointer-events: none;
 }
 
 .star-wars-intro .space-button {
-  color: #EBD71C;
-  border: 12px solid #EBD71C;
+  color: #ebd71c;
+  border: 12px solid #ebd71c;
   padding: 20px;
   background: transparent;
   text-decoration: none;
@@ -150,15 +160,15 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
 }
 
 .star-wars-intro .space-button:hover {
-  background-color: #D2BE03;
-  border-color: #D2BE03;
+  background-color: #d2be03;
+  border-color: #d2be03;
   color: black;
 }
 
 .star-wars-intro .space-button:active,
 .star-wars-intro .space-button:focus {
-  background-color: #B8A40A;
-  border-color: #B8A40A;
+  background-color: #b8a40a;
+  border-color: #b8a40a;
   color: black;
 }
 
@@ -168,7 +178,7 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
   animation: scroll 120s linear 4s forwards;
 }
 
-.star-wars-intro .title-content>.content-header {
+.star-wars-intro .title-content > .content-header {
   text-align: center;
 }
 
@@ -185,7 +195,11 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
   line-height: 0.8em;
   letter-spacing: -0.05em;
   color: #000;
-  text-shadow: -2px -2px 0 #EBD71C, 2px -2px 0 #EBD71C, -2px 2px 0 #EBD71C, 2px 2px 0 #EBD71C;
+  text-shadow:
+    -2px -2px 0 #ebd71c,
+    2px -2px 0 #ebd71c,
+    -2px 2px 0 #ebd71c,
+    2px 2px 0 #ebd71c;
   opacity: 0;
   z-index: 1;
   -webkit-animation: logo 5s ease-out 2.5s;
@@ -195,7 +209,7 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
   animation: logo 5s ease-out 2.5s;
 }
 
-.star-wars-intro .main-logo>img {
+.star-wars-intro .main-logo > img {
   max-width: 100%;
 }
 
@@ -268,7 +282,6 @@ Description: Adapted the CSS to go full screen when used as a component in an ap
     opacity: 0;
   }
 }
-
 
 @-webkit-keyframes logo {
   0% {

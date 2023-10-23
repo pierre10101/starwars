@@ -6,11 +6,14 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint:js": "eslint --ext \".ts,.vue\" --ignore-path .gitignore .",
+    "lint:prettier": "prettier --check .",
+    "lint": "lint:js && lint:prettier",
+    "lintfix": "prettier --write --list-different . && lint:js --fix"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
+    "@nuxt/devtools": "^1.0.0",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@vite-pwa/nuxt": "^0.1.1",
     "nuxt": "^3.7.4",
@@ -18,8 +21,16 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@typescript-eslint/parser": "^6.8.0",
     "@vueuse/components": "^10.5.0",
     "@vueuse/nuxt": "^10.5.0",
-    "nuxt-swapi": "^1.0.16"
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "nuxt-swapi": "^1.0.16",
+    "prettier": "^3.0.3",
+    "save-dev": "^0.0.1-security",
+    "typescript": "^5.2.2"
   }
 }
