@@ -4,13 +4,13 @@ export default async function useSelectDynamicState() {
   interface Options {
     [key: string]: any;
   }
-  const people = useStorage<IPeople[] | []>("star_wars_people", []);
+  const people = useState<(IPeople)[]>("people", () => []);
   const species = useStorage("star_wars_species", []);
-  const planets = useStorage<IPlanet[] | []>("star_wars_planets", []);
+  const planets = useState<(IPlanet)[]>("planets", () => []);
   const starships = useStorage("star_wars_starships", []);
   const vehicles = useStorage("star_wars_vehicles", []);
-  const films = useStorage<(IFilm | null)[]>("star_wars_films", []);
-  const options = ref<Options>({});
+  const films = useState<(IFilm | null)[]>("films", () => []);
+  const options = useState<Options>('options', () => ({}));
 
   const intersection = (...objects: any) => {
     if (objects.length === 1) {
@@ -19,7 +19,7 @@ export default async function useSelectDynamicState() {
     const result: any = {};
     const [firstObject, ...restObjects] = objects;
 
-    for (let key in firstObject) {
+    for (const key in firstObject) {
       if (restObjects.every((obj: any) => obj.hasOwnProperty(key))) {
         result[key] = firstObject[key];
       }
@@ -57,6 +57,35 @@ export default async function useSelectDynamicState() {
     return Object.keys(intersection(...object));
   });
 
+  const selectDynamicData = computed(() => {
+    const computedPeople = () => {
+      return people.value.map((value: IPeople) => {
+        return {
+          text: value.name,
+          value: value.name,
+        };
+      });
+    };
+    const computedPlanet = () => {
+      return planets.value.map((value: IPlanet) => {
+        return {
+          text: value.name,
+          value: value.name,
+        };
+      });
+    };
+    return [
+      {
+        data: computedPeople(),
+        field: "People",
+      },
+      {
+        data: computedPlanet(),
+        field: "Planets",
+      },
+    ];
+  });
+
   return {
     people,
     species,
@@ -65,6 +94,7 @@ export default async function useSelectDynamicState() {
     vehicles,
     films,
     options,
-    urls
+    urls,
+    selectDynamicData
   };
 }

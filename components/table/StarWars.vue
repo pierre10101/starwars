@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from '@vueuse/components'
 import { IFilm, IPeople, IPlanet } from 'nuxt-swapi/dist/runtime/types';
-
-const selectData = await useSelectDynamicComputed();
 const isLoading = ref(true);
 const { People, Planets, Films } = useSwapi();
-const { people, planets, films, options, urls } = await useStarWarsApiState();
-
+const { people, planets, films, options, urls, selectDynamicData } = await useStarWarsApiState();
 const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
     // Add data when intersection reached. Not relevant as 6 movies in total. 
 };
@@ -15,36 +12,37 @@ const selectDynamicOption = async (event: { value: string }) => {
     options.value[index] = value;
     isLoading.value = true
     const result = (await Films.findByUrl(urls.value));
+    console.log(result);
     if (result) {
         films.value = result;
     }
     isLoading.value = false;
 }
-
 onMounted(async () => {
     if (films.value.length === 0) {
-        films.value = (await Films.getAll()) as IFilm[];
+        const result = (await Films.getAll());
+        films.value =  result ? result : films.value;
     }
     if (people.value.length === 0) {
-        people.value = (await People.getAll()) as IPeople[];
+        const result = (await People.getAll());;
+        people.value = result ? result : people.value;
     }
     if (planets.value.length === 0) {
-        planets.value = (await Planets.getAll()) as IPlanet[];
+        const result = (await Planets.getAll());
+        planets.value = result ? result : planets.value;
     }
     isLoading.value = false;
 })
-
 const reload = async () => {
     isLoading.value = true;
     films.value = (await Films.getAll()) as IFilm[];
     window.location.reload()
 }
-
 </script>
 
 <template>
     <loader-darth-vader v-if="isLoading" />
-    <select-dynamic @option="selectDynamicOption" :selectData="selectData" @reset="reload()"/>
+    <select-dynamic @option="selectDynamicOption" :selectData="selectDynamicData" @reset="reload()"/>
     <!-- Table -->
     <div class="w-full overflow-x-auto">
         <table class="w-full min-w-max">

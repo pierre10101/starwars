@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'starwars-yellow': '#EBD71C',
+        'starwars-yellow': '#FFE81F',
       },
       backgroundImage: {
         'stars': "url('~/assets/img/stars-bg.jpg')",
