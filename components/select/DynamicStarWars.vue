@@ -4,6 +4,7 @@ export interface Props {
     data: {
       text: string;
       value: string;
+      selected: boolean;
     }[];
     field: string;
   }[];
@@ -38,6 +39,7 @@ const emit = defineEmits(["option", "reset"]);
                 v-for="(option, optionIndex) in selectOption.data"
                 :key="optionIndex"
                 :value="`${selectOption.field}/${option.value}`"
+                :selected="option.selected"
                 class="text-black bg-starwars-yellow border-starwars-yellow"
               >
                 {{ option.text }}

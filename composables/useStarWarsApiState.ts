@@ -10,7 +10,7 @@ export default function useStarWarsApiState() {
   const starships = useStorage("star_wars_starships", []);
   const vehicles = useStorage("star_wars_vehicles", []);
   const films = useStorage<(IFilm | null)[]>("star_wars_films", []);
-  const options = useState<Options>("options", () => ({}));
+  const options = useStorage<Options>("options", {});
 
   const intersection = (...objects: any) => {
     if (objects.length === 1) {
@@ -63,6 +63,7 @@ export default function useStarWarsApiState() {
         return {
           text: value.name,
           value: value.name,
+          selected: value.name === options.value?.People,
         };
       });
     };
@@ -71,6 +72,7 @@ export default function useStarWarsApiState() {
         return {
           text: value.name,
           value: value.name,
+          selected: value.name === options.value?.Planets,
         };
       });
     };

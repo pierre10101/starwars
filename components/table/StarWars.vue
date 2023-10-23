@@ -124,8 +124,8 @@ const reload = async () => {
               class="flex h-20 px-12 items-center justify-center"
               @click="$router.push(`/admin/display?id=${film?.episode_id}`)"
             >
-              <a
-                class="group inline-flex items-center font-base text-starwars-yellow font-semibold"
+              <div
+                class="cursor-pointer group inline-flex items-center font-base text-starwars-yellow font-semibold"
                 href="#"
               >
                 <span class="mr-2">More</span>
@@ -175,7 +175,7 @@ const reload = async () => {
                     </svg>
                   </div>
                 </div>
-              </a>
+              </div>
             </div>
           </td>
         </tr>

@@ -16,7 +16,7 @@ onMounted(() => {
         <div
           class="hidden md:block absolute top-1/2 left-0 w-64 h-2/3 -ml-6 transform -translate-y-1/2 bg-starwars-yellow"
         ></div>
-        <div class="relative w-full md:w-1/2 lg:w-1/3 h-64 md:h-auto">
+        <div class="relative w-full md:w-1/2 lg:w-1/3 md:h-auto">
           <img
             class="h-full w-full object-cover"
             :src="`/img/${displayFilm?.title.replace(/\s+/g, '_')}.jpg`"
