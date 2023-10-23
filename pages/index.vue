@@ -1,5 +1,26 @@
 <script setup lang="ts">
 const isIntro = ref(true);
+const { People, Planets, Films } = useSwapi();
+const { people, planets, films } = useStarWarsApiState();
+
+if (films.value.length === 0) {
+  Films.getAll().then((result) => {
+    films.value = result || films.value;
+    return result;
+  });
+}
+if (people.value.length === 0) {
+  People.getAll().then((result) => {
+    people.value = result || people.value;
+    return result;
+  });
+}
+if (planets.value.length === 0) {
+  Planets.getAll().then((result) => {
+    planets.value = result || planets.value;
+    return result;
+  });
+}
 </script>
 
 <template>

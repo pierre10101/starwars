@@ -33,7 +33,7 @@ onMounted(() => {
             currentRow * tileHeight,
             tileWidth,
             tileHeight,
-            0,
+            -10,
             100,
             tileWidth,
             tileHeight,

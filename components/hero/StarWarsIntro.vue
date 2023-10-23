@@ -36,6 +36,7 @@ const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
     ref="mainRef"
     tabindex="0"
     class="star-wars-intro"
+    @click="(playing = false), $router.push(navigationButtonLink)"
     @keyup.space="(playing = false), $router.push(navigationButtonLink)"
   >
     <!-- Blue Intro Text -->
