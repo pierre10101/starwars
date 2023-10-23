@@ -38,7 +38,6 @@ onMounted(() => {
                 <span class="text-ms italic text-gray-500">Producer -</span>
                 {{ displayFilm?.producer }}
               </p>
-              <div class="ml-auto flex items-center justify-end"></div>
             </div>
           </div>
         </div>
