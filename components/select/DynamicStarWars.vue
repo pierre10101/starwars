@@ -28,17 +28,17 @@ const emit = defineEmits(["option", "reset"]);
             <select
               v-for="(selectOption, selectIndex) in selectData"
               :key="selectIndex"
-              class="border border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer"
+              class="border border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer"
               @change="emit('option', $event.target)"
             >
-              <option disabled selected>
+              <option class="bg-starwars-yellow" disabled selected>
                 {{ selectOption.field.toUpperCase() }}
               </option>
               <option
                 v-for="(option, optionIndex) in selectOption.data"
                 :key="optionIndex"
                 :value="`${selectOption.field}/${option.value}`"
-                class="text-black"
+                class="text-black bg-starwars-yellow border-starwars-yellow"
               >
                 {{ option.text }}
               </option>

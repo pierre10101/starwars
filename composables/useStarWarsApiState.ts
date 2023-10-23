@@ -20,7 +20,7 @@ export default function useStarWarsApiState() {
     const [firstObject, ...restObjects] = objects;
 
     for (const key in firstObject) {
-      if (restObjects.every((obj: any) => obj.includes(key))) {
+      if (restObjects.every((obj: any) => obj[key])) {
         result[key] = firstObject[key];
       }
     }

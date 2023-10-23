@@ -12,10 +12,8 @@ const selectDynamicOption = async (event: { value: string }) => {
   const [index, value] = event.value.split("/");
   options.value[index] = value;
   isLoading.value = true;
-  const result = await Films.findByUrl(urls.value);
-  if (result) {
-    films.value = result;
-  }
+  console.log(urls.value);
+  films.value = await Films.findByUrl(urls.value);
   isLoading.value = false;
 };
 onMounted(async () => {
