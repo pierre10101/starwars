@@ -6,6 +6,12 @@ onMounted(() => {
   displayFilm.value = films.value.find(
     (film) => film?.episode_id.toString() === route.query.id?.toString(),
   );
+  if (!displayFilm.value) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Cannot find the Movie, Return to homescreen",
+    });
+  }
 });
 </script>
 
