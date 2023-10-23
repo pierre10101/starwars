@@ -92,7 +92,7 @@ To format using eslint
 
 ## Style Utilities
 
-### This project implements `Tailwindcss`. 
+### This project implements `Tailwindcss`.
 
 Most defaults are used. See the [Documentation](https://tailwindcss.com/docs/configuration).
-Any custom additions like images and colours can be found in the `tailwind.config.js` file. 
+Any custom additions like images and colours can be found in the `tailwind.config.js` file.
