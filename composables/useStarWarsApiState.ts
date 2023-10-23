@@ -4,6 +4,7 @@ export default function useStarWarsApiState() {
   interface Options {
     [key: string]: any;
   }
+  const isLoading = useState("is-loaded", () => true);
   const people = useStorage<IPeople[]>("star_wars_people", []);
   const species = useStorage("star_wars_species", []);
   const planets = useStorage<IPlanet[]>("star_wars_planets", []);
@@ -98,5 +99,6 @@ export default function useStarWarsApiState() {
     options,
     urls,
     selectDynamicData,
+    isLoading,
   };
 }

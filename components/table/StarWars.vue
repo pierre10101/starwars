@@ -1,40 +1,15 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from "@vueuse/components";
-const isLoading = ref(true);
-const { People, Planets, Films } = useSwapi();
-const { people, planets, films, options, urls, selectDynamicData } =
-  useStarWarsApiState();
+const { films, selectDynamicData, isLoading } = useStarWarsApiState();
+const { loadData, selectDynamicOption, reload } = useStarWarsApiActions();
 const handleInfinityScroll = async () => {
   // Add data when intersection reached. Not relevant as 6 movies in total.
 };
-const selectDynamicOption = async (event: { value: string }) => {
-  const [index, value] = event.value.split("/");
-  options.value[index] = value;
-  isLoading.value = true;
-  films.value = await Films.findByUrl(urls.value);
-  isLoading.value = false;
-};
+
 onMounted(async () => {
-  if (films.value.length === 0) {
-    const result = await Films.getAll();
-    films.value = result || films.value;
-  }
-  if (people.value.length === 0) {
-    const result = await People.getAll();
-    people.value = result || people.value;
-  }
-  if (planets.value.length === 0) {
-    const result = await Planets.getAll();
-    planets.value = result || planets.value;
-  }
+  await loadData();
   isLoading.value = false;
 });
-const reload = async () => {
-  isLoading.value = true;
-  const result = await Films.getAll();
-  films.value = result || films.value;
-  window.location.reload();
-};
 </script>
 
 <template>
