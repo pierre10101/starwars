@@ -52,124 +52,47 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://nuxt.com/docs/getting-started/deployment) for more information.
 
-### `npm run lint` or `yarn lint`
+### `npm run lint` or `yarn run lint`
 
-To check javascript linting rules.
+To check javascript linting rules based on eslint and prettier.
 
-### `npm run format` or `yarn format`
+### `npm run lintfix` or `yarn run lintfix`
 
-To format or prettier codebase using `Prettier`.
+To format using eslint
 
 ## Folder Structure
 
 ```
-|-- src/
-    |-- components/
-    |-- shared/
-        |-- assets/
-            |-- fonts/
-            |-- icon/
-            |-- images/
-        |-- components/
-            |-- Loader/
-        |-- constants/
-        |-- helpers/
-        |-- hooks/
-        |-- styles/
-            |-- base/
-            |-- themes/
-    |-- App.js
-    |-- index.js
-    |-- serviceWorker.js
-    |-- setupTests.js
+|-- assets/
+    |-- img/
+    |-- sound/
+|-- components/
+    |-- hero/
+    |-- loader/
+    |-- modal/
+    |-- select/
+    |-- table/
+|-- composables/
+|-- layouts/
+|-- pages/
+    |-- admin/
+|-- plugins/
+|-- server/
+|-- app.vue
+|-- nuxt.config.ts
+|-- tailwind.config.js
+|-- tsconfig.json
 ```
 
-- `components` : Folder to put all non shared Component
-- `shared/assets` : Folder to put assets like fonts, icons and images
-- `shared/components`: Folder to put all shared Component
-- `shared/constants` : Folder to put all of ours constant like `api url`, `mock`, `action types` and all others constant data that dont changed
-- `shared/helpers` : Folder to put our helpers function like Consume API and formating data or others helpers
-- `shared/hooks` : Folder to put all of ours custom hooks/logic for component
-- `styles` : Folder to put our Styled Component that reusable
+- `components` : Folder to put all components shared and not
+- `composables` : Folder to manage central state and other hooks
+- `layouts`: Folder to manage layout
+- `pages`: Folder to manage all pages (file based routing)
+- `plugins : Folder to manage any framework extension based on plugins i.e., error handling
 
 ## Style Utilities
 
-### Relative Unit
+### This project implements `Tailwindcss`. 
 
-This project using relative unit based 10px. so you can use `1rem` which means `10px` propeties in css to help ours styling more easier handling Resposive.
-
-### Grid
-
-This project using Grid System which is using 3 Column because based on Content/Data, we only need 3 Column. This Grid system i made it myself using Flexbox. You can find `Grid` file in `src/shared/styles/base/grid.js`. This `Grid` system contain `Container`, `Row` and `Col`.<br>
-
-- How to use it
-
-  ```
-  import { Container, Row, Col } from 'path/to/grid/file';
-
-  <Container>
-    <Row>
-      <Col>Column 1</Col>
-      <Col>Column 2</Col>
-      <Col>Column 3</Col>
-    </Row>
-  <Container>
-  ```
-
-  or if you only want to use `Container`, well, you dont have to import `Row` and `Col`. but if you want to use `Col` you must wrap with `Container` and `Row`.
-
-  ```
-  import { Container, Row, Col } from 'path/to/grid/file';
-
-  <Container>
-    <YourComponentHere />
-  <Container>
-  ```
-
-* Custom Grid<br>
-  Also you can modify `Container`, `Row` or `Col` to achieve something that this `Grid` cannot do, or you want to add some value or edit some value.
-
-  ```
-  import styled from 'styled-components';
-  import { Col } from 'path/to/grid/file';
-
-  const YourCustomComponent = styled(Col)`
-    background: orangered;
-  `;
-
-  <Container>
-    <Row>
-      <YourCustomComponent>Column 1</YourCustomComponent>
-      <YourCustomComponent>Column 2</YourCustomComponent>
-      <YourCustomComponent>Column 3</YourCustomComponent>
-    </Row>
-  <Container>
-  ```
-
-### Media Queries
-
-#### Relative Unit
-
-| State           | Properties  |
-| --------------- | ----------- |
-| Default         | 1rem = 10px |
-| max-width 768px | 1rem = 9px  |
-| max-width 576px | 1rem = 8px  |
-
-#### Container
-
-| State            | Properties     |
-| ---------------- | -------------- |
-| Default          | width = 100%   |
-| min-width 576px  | width = 540px  |
-| min-width 768px  | width = 720px  |
-| min-width 992px  | width = 960px  |
-| min-width 1200px | width = 1140px |
-
-#### Column
-
-| State           | Numbers of Column in Row |
-| --------------- | ------------------------ |
-| Default         | 1                        |
-| min-width 768px | 2                        |
-| min-width 992px | 3                        |
+Most defaults are used. See the [Documentation](https://tailwindcss.com/docs/configuration).
+Any custom additions like images and colours can be found in the `tailwind.config.js` file. 
