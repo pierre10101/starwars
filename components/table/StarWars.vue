@@ -12,7 +12,6 @@ const selectDynamicOption = async (event: { value: string }) => {
     options.value[index] = value;
     isLoading.value = true
     const result = (await Films.findByUrl(urls.value));
-    console.log(result);
     if (result) {
         films.value = result;
     }
@@ -46,7 +45,7 @@ const reload = async () => {
     <!-- Table -->
     <div class="w-full overflow-x-auto">
         <table class="w-full min-w-max">
-            <thead class="border border-starwars-yellow bg-transparent text-starwars-yellow text-xs font-norma">
+            <thead class="border border-starwars-yellow bg-transparent text-starwars-yellow text-xs font-normal">
                 <tr>
                     <th class="p-0">
                         <div class="h-16 pl-8 pr-6 flex items-center rounded-tl-xl">

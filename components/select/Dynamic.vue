@@ -30,7 +30,7 @@ const emit = defineEmits(['option', 'reset'])
                         </select>
                     </div>
                 </div>
-                <div class="cursor-pointer border border-starwars-yellow px-3 ml-auto">
+                <div class="cursor-pointer border border-starwars-yellow px-3 lg:ml-auto">
                     <span @click="emit('reset')" class="text-3xl font-heading font-semibold text-starwars-yellow">Reset</span>
                 </div>
             </div>
