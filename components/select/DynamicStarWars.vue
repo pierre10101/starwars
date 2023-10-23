@@ -28,7 +28,7 @@ const emit = defineEmits(["option", "reset"]);
             <select
               v-for="(selectOption, selectIndex) in selectData"
               :key="selectIndex"
-              class="border border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent outline-none appearance-none cursor-pointer"
+              class="border border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer"
               @change="emit('option', $event.target)"
             >
               <option disabled selected>
@@ -38,6 +38,7 @@ const emit = defineEmits(["option", "reset"]);
                 v-for="(option, optionIndex) in selectOption.data"
                 :key="optionIndex"
                 :value="`${selectOption.field}/${option.value}`"
+                class="text-black"
               >
                 {{ option.text }}
               </option>
@@ -45,13 +46,9 @@ const emit = defineEmits(["option", "reset"]);
           </div>
         </div>
         <div
-          class="cursor-pointer border border-starwars-yellow px-3 lg:ml-auto"
+          class="cursor-pointer border border-starwars-yellow p-3 lg:ml-auto text-md font-semibold text-starwars-yellow"
         >
-          <span
-            class="text-3xl font-heading font-semibold text-starwars-yellow"
-            @click="emit('reset')"
-            >Reset</span
-          >
+          <span @click="emit('reset')">RESET</span>
         </div>
       </div>
     </div>
