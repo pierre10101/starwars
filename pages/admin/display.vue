@@ -9,7 +9,7 @@ onMounted(() => {
   if (!displayFilm.value) {
     throw createError({
       statusCode: 404,
-      statusMessage: "Cannot find the Movie, Return to homescreen",
+      statusMessage: "Cannot find the Movie",
     });
   }
 });
