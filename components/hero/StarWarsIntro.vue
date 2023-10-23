@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import starWarsThemeSong from "~/assets/sound/star-wars-theme-song.mp3";
 import { useMediaControls } from "@vueuse/core";
+import starWarsThemeSong from "~/assets/sound/star-wars-theme-song.mp3";
 
 export interface Props {
   navigationButtonLink?: string;
@@ -13,7 +13,7 @@ const { playing, volume } = useMediaControls(audioRef, {
   src: starWarsThemeSong,
 });
 
-onMounted(async () => {
+onMounted(() => {
   volume.value = 0.75;
   setTimeout(() => {
     playing.value = true;
@@ -35,8 +35,8 @@ const { navigationButtonLink } = withDefaults(defineProps<Props>(), {
   <main
     ref="mainRef"
     tabindex="0"
-    @keyup.space="(playing = false), $router.push(navigationButtonLink)"
     class="star-wars-intro"
+    @keyup.space="(playing = false), $router.push(navigationButtonLink)"
   >
     <!-- Blue Intro Text -->
     <h1 class="intro-text">

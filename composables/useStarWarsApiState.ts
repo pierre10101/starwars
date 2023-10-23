@@ -20,7 +20,7 @@ export default function useStarWarsApiState() {
     const [firstObject, ...restObjects] = objects;
 
     for (const key in firstObject) {
-      if (restObjects.every((obj: any) => obj.hasOwnProperty(key))) {
+      if (restObjects.every((obj: any) => obj.includes(key))) {
         result[key] = firstObject[key];
       }
     }
@@ -33,7 +33,7 @@ export default function useStarWarsApiState() {
     const object: any[] = [];
     if ("Planets" in options.value && planets.value.length > 0) {
       const items = planets.value
-        .filter((value) => value.name === options.value["Planets"])
+        .filter((value) => value.name === options.value.Planets)
         .map((value) => value.films);
       for (const films of items) {
         for (const film of films) {
@@ -44,7 +44,7 @@ export default function useStarWarsApiState() {
     }
     if ("People" in options.value && people.value.length > 0) {
       const items = people.value
-        .filter((value) => value.name === options.value["People"])
+        .filter((value) => value.name === options.value.People)
         .map((value) => value.films);
       for (const films of items) {
         for (const film of films) {

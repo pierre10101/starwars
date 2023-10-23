@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { vIntersectionObserver } from "@vueuse/components";
-import { IFilm, IPeople, IPlanet } from "nuxt-swapi/dist/runtime/types";
+import { IFilm } from "nuxt-swapi/dist/runtime/types";
 const isLoading = ref(true);
 const { People, Planets, Films } = useSwapi();
-const { people, planets, films, options, urls, selectDynamicData } = useStarWarsApiState();
-const handleInfinityScroll = async (entries: IntersectionObserverEntry[]) => {
+const { people, planets, films, options, urls, selectDynamicData } =
+  useStarWarsApiState();
+const handleInfinityScroll = async () => {
   // Add data when intersection reached. Not relevant as 6 movies in total.
 };
 const selectDynamicOption = async (event: { value: string }) => {
@@ -20,15 +21,15 @@ const selectDynamicOption = async (event: { value: string }) => {
 onMounted(async () => {
   if (films.value.length === 0) {
     const result = await Films.getAll();
-    films.value = result ? result : films.value;
+    films.value = result || films.value;
   }
   if (people.value.length === 0) {
     const result = await People.getAll();
-    people.value = result ? result : people.value;
+    people.value = result || people.value;
   }
   if (planets.value.length === 0) {
     const result = await Planets.getAll();
-    planets.value = result ? result : planets.value;
+    planets.value = result || planets.value;
   }
   isLoading.value = false;
 });
@@ -41,9 +42,9 @@ const reload = async () => {
 
 <template>
   <loader-darth-vader v-if="isLoading" />
-  <select-dynamic
+  <select-dynamic-star-wars
+    :select-data="selectDynamicData"
     @option="selectDynamicOption"
-    :selectData="selectDynamicData"
     @reset="reload()"
   />
   <!-- Table -->
@@ -82,11 +83,11 @@ const reload = async () => {
       </thead>
       <tbody>
         <tr
-          @click="$router.push(`/admin/display?id=${film?.episode_id}`)"
-          v-intersection-observer="handleInfinityScroll"
           v-for="(film, index) in films"
           :key="index"
+          v-intersection-observer="handleInfinityScroll"
           class="cursor-pointer border border-starwars-yellow text-white"
+          @click="$router.push(`/admin/display?id=${film?.episode_id}`)"
         >
           <td class="p-0">
             <div class="flex h-20 items-center w-full pl-8 bg-transparent">
@@ -123,8 +124,8 @@ const reload = async () => {
           </td>
           <td class="p-0">
             <div
-              @click="$router.push(`/admin/display?id=${film?.episode_id}`)"
               class="flex h-20 px-12 items-center justify-center"
+              @click="$router.push(`/admin/display?id=${film?.episode_id}`)"
             >
               <a
                 class="group inline-flex items-center font-base text-starwars-yellow font-semibold"
