@@ -28,7 +28,7 @@ const emit = defineEmits(["option", "reset"]);
             <select
               v-for="(selectOption, selectIndex) in selectData"
               :key="selectIndex"
-              class="border border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer"
+              class="border border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer outline-none appearance-none"
               @change="emit('option', $event.target)"
             >
               <option class="bg-starwars-yellow" disabled selected>
