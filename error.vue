@@ -18,7 +18,7 @@ const handleError = () => clearError({ redirect: "/" });
         class="bg-transparent hover:bg-starwars-yellow hover:text-black border border-starwars-yellow text-starwars-yellow px-4 py-2 mr-4"
         @click="handleError"
       >
-        Clear errors
+        Back
       </button>
     </div>
   </div>

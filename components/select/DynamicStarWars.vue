@@ -49,8 +49,9 @@ const emit = defineEmits(["option", "reset"]);
         </div>
         <div
           class="cursor-pointer border border-starwars-yellow p-3 lg:ml-auto text-md font-semibold text-starwars-yellow"
+          @click="emit('reset')"
         >
-          <span @click="emit('reset')">RESET</span>
+          <span>RESET</span>
         </div>
       </div>
     </div>

@@ -43,7 +43,6 @@ export default function useStarWarsApiActions() {
     isLoading.value = true;
     const result = await Films.getAll();
     films.value = result || films.value;
-    window.location.reload();
     isLoading.value = false;
   };
   return {
