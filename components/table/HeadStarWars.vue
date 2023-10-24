@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  headings: string[];
+  headings?: string[];
 }
 
 const { headings } = withDefaults(defineProps<Props>(), {

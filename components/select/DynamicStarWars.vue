@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStorage } from "@vueuse/core";
 export interface Props {
   selectData: {
     data: {
@@ -11,6 +12,7 @@ export interface Props {
 }
 const { selectData } = defineProps<Props>();
 const emit = defineEmits(["option", "reset"]);
+const selected = useStorage<string[]>("selected_item_star_wars", ["", ""]);
 </script>
 
 <template>
@@ -29,17 +31,17 @@ const emit = defineEmits(["option", "reset"]);
             <select
               v-for="(selectOption, selectIndex) in selectData"
               :key="selectIndex"
+              v-model="selected[selectIndex]"
               class="border border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer outline-none appearance-none"
               @change="emit('option', $event.target)"
             >
-              <option class="bg-starwars-yellow" disabled selected>
+              <option class="bg-starwars-yellow" disabled value="">
                 {{ selectOption.field.toUpperCase() }}
               </option>
               <option
                 v-for="(option, optionIndex) in selectOption.data"
                 :key="optionIndex"
                 :value="`${selectOption.field}/${option.value}`"
-                :selected="option.selected"
                 class="text-black bg-starwars-yellow border-starwars-yellow"
               >
                 {{ option.text }}
@@ -49,7 +51,7 @@ const emit = defineEmits(["option", "reset"]);
         </div>
         <div
           class="cursor-pointer border border-starwars-yellow p-3 lg:ml-auto text-md font-semibold text-starwars-yellow"
-          @click="emit('reset')"
+          @click="emit('reset'), (selected = ['', ''])"
         >
           <span>RESET</span>
         </div>
