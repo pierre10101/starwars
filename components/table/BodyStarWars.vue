@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { vIntersectionObserver } from "@vueuse/components";
-const handleInfinityScroll = async () => {
-  // Add data when intersection reached. Not relevant as 6 movies in total.
-};
 const { filteredFilms } = useStarWarsApiState();
 </script>
 
@@ -11,7 +7,6 @@ const { filteredFilms } = useStarWarsApiState();
     <tr
       v-for="(film, index) in filteredFilms"
       :key="index"
-      v-intersection-observer="handleInfinityScroll"
       class="cursor-pointer border border-starwars-yellow text-white"
       @click="$router.push(`/admin/display?id=${film?.episode_id}`)"
     >

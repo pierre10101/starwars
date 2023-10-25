@@ -1,4 +1,4 @@
-<script>
+<script setup lang="ts">
 useHead({
   title: "Star Wars - HomePage",
   meta: [
