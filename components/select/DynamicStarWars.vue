@@ -23,7 +23,7 @@ const selected = useStorage<string[]>("selected_item_star_wars", ["", ""]);
       <div class="flex flex-wrap -mx-3 items-center">
         <div class="w-full xl:w-auto px-3 mb-4 xl:mb-0">
           <span class="text-3xl font-heading font-semibold text-starwars-yellow"
-            >Sort by</span
+            >Filter By</span
           >
         </div>
         <div>
