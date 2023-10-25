@@ -3,13 +3,13 @@ import { vIntersectionObserver } from "@vueuse/components";
 const handleInfinityScroll = async () => {
   // Add data when intersection reached. Not relevant as 6 movies in total.
 };
-const { films } = useStarWarsApiState();
+const { filteredFilms } = useStarWarsApiState();
 </script>
 
 <template>
   <tbody>
     <tr
-      v-for="(film, index) in films"
+      v-for="(film, index) in filteredFilms"
       :key="index"
       v-intersection-observer="handleInfinityScroll"
       class="cursor-pointer border border-starwars-yellow text-white"

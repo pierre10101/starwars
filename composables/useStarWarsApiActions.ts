@@ -1,6 +1,5 @@
 const { People, Planets, Films } = useSwapi();
-const { people, planets, films, options, urls, isLoading } =
-  useStarWarsApiState();
+const { people, planets, films, options } = useStarWarsApiState();
 export default function useStarWarsApiActions() {
   const loadData = async () => {
     try {
@@ -24,30 +23,17 @@ export default function useStarWarsApiActions() {
     }
   };
 
-  const selectDynamicOption = async (event: { value: string }) => {
+  const selectDynamicOption = (event: { value: string }) => {
     const [index, value] = event.value.split("/");
     options.value[index] = value;
-    isLoading.value = true;
-    try {
-      films.value = await Films.findByUrl(urls.value);
-    } catch (error) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "Cannot find the Movie",
-      });
-    }
-    isLoading.value = false;
   };
 
-  const reload = async () => {
-    isLoading.value = true;
-    const result = await Films.getAll();
-    films.value = result || films.value;
-    isLoading.value = false;
+  const reload = () => {
+    options.value = {};
   };
   return {
+    reload,
     loadData,
     selectDynamicOption,
-    reload,
   };
 }
