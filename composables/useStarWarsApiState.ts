@@ -2,7 +2,7 @@ import { useStorage } from "@vueuse/core";
 import { IFilm, IPeople, IPlanet } from "nuxt-swapi/dist/runtime/types";
 export default function useStarWarsApiState() {
   interface Options {
-    [key: string]: any;
+    [key: string]: unknown;
   }
   const isLoading = useState("is-loaded", () => true);
   const people = useStorage<IPeople[]>("star_wars_people", []);
@@ -13,19 +13,21 @@ export default function useStarWarsApiState() {
   const films = useStorage<(IFilm | null)[]>("star_wars_films", []);
   const options = useStorage<Options>("options", {});
 
-  const intersection = (...objects: any) => {
+  const intersection = <T extends Record<string, unknown>>(
+    ...objects: T[]
+  ): T => {
     if (objects.length === 1) {
       return objects[0];
     }
-    const result: any = {};
+    const result: Partial<T> = {};
     const [firstObject, ...restObjects] = objects;
 
     for (const key in firstObject) {
-      if (restObjects.every((obj: any) => obj[key])) {
+      if (restObjects.every((obj) => key in obj)) {
         result[key] = firstObject[key];
       }
     }
-    return result;
+    return result as T;
   };
 
   const urls = computed(() => {
