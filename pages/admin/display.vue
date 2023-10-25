@@ -26,14 +26,24 @@ onMounted(() => {
     (film) => film?.episode_id.toString() === route.query.id?.toString(),
   );
   useHead({
-    title: "Star Wars - Display Page",
+    title: `Star Wars - ${displayFilm.value?.title}`,
     meta: [
-      { name: "description", content: "A site dedicated to Starwars" },
-      { property: "og:title", content: "Star Wars" },
-      { property: "og:description", content: "A site dedicated to Starwars" },
+      { name: "title", property: "og:title", content: "Star Wars" },
+      { name: "type", property: "og:type", content: "website" },
       {
+        name: "description",
+        property: "og:description",
+        content: "A site dedicated to Starwars",
+      },
+      {
+        name: "image",
         property: "og:image",
         content: `/img/${displayFilm.value?.title.replace(/\s+/g, "_")}.jpg`,
+      },
+      {
+        name: "url",
+        property: "og:url",
+        content: "https://starwars.coffee.gives/",
       },
     ],
   });
