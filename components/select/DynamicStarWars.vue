@@ -12,7 +12,13 @@ export interface Props {
 }
 const { selectData } = defineProps<Props>();
 const emit = defineEmits(["option", "reset"]);
-const selected = useStorage<string[]>("selected_item_star_wars", ["", ""]);
+const selected = useStorage<string[]>("selected_item_star_wars", [
+  "",
+  "",
+  "",
+  "",
+  "",
+]);
 </script>
 
 <template>
@@ -35,7 +41,7 @@ const selected = useStorage<string[]>("selected_item_star_wars", ["", ""]);
               class="border border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer outline-none appearance-none"
               @change="emit('option', $event.target)"
             >
-              <option class="bg-starwars-yellow" disabled value="">
+              <option class="bg-starwars-yellow" disabled value="" selected>
                 {{ selectOption.field.toUpperCase() }}
               </option>
               <option
@@ -51,7 +57,7 @@ const selected = useStorage<string[]>("selected_item_star_wars", ["", ""]);
         </div>
         <div
           class="cursor-pointer border border-starwars-yellow p-3 lg:ml-auto text-md font-semibold text-starwars-yellow"
-          @click="emit('reset'), (selected = ['', ''])"
+          @click="emit('reset'), (selected = ['', '', '', '', ''])"
         >
           <span>RESET</span>
         </div>

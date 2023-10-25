@@ -1,5 +1,6 @@
-const { People, Planets, Films } = useSwapi();
-const { people, planets, films, options } = useStarWarsApiState();
+const { People, Planets, Films, Species, Vehicles, Starships } = useSwapi();
+const { people, planets, species, vehicles, starships, films, options } =
+  useStarWarsApiState();
 export default function useStarWarsApiActions() {
   const loadData = async () => {
     try {
@@ -14,6 +15,18 @@ export default function useStarWarsApiActions() {
       if (planets.value.length === 0) {
         const result = await Planets.getAll();
         planets.value = result || planets.value;
+      }
+      if (species.value.length === 0) {
+        const result = await Species.getAll();
+        species.value = result || species.value;
+      }
+      if (vehicles.value.length === 0) {
+        const result = await Vehicles.getAll();
+        vehicles.value = result || vehicles.value;
+      }
+      if (starships.value.length === 0) {
+        const result = await Starships.getAll();
+        starships.value = result || starships.value;
       }
     } catch (error) {
       throw createError({
