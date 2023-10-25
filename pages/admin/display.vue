@@ -111,9 +111,7 @@ const calculateVehicles = computed(() => {
     </div>
 
     <!-- Exstras -->
-    <section
-      class="flex flex-row flex-wrap lg:justify-start sm:justify-center"
-    >
+    <section class="flex flex-row flex-wrap lg:justify-start sm:justify-center">
       <div class="lg:w-1/2 w-full mt-16 px-4">
         <div class="flex mb-20 justify-center bg-white">
           <div class="w-full md:w-1/2 lg:w-2/3 p-6 self-center">
