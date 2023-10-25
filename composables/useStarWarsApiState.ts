@@ -95,6 +95,9 @@ export default function useStarWarsApiState() {
   });
 
   const filteredFilms = computed(() => {
+    if (Object.keys(options.value).length === 0) {
+      return films.value;
+    }
     if (films.value.length > 0) {
       return films.value.filter((item) =>
         urls.value.includes(item?.url === undefined ? "" : item.url),
