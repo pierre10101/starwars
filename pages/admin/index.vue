@@ -1,3 +1,14 @@
+<script setup lang="ts">
+useHead({
+  title: "Star Wars - Admin",
+  meta: [
+    { name: "description", content: "A site dedicated to Starwars" },
+    { property: "og:title", content: "Star Wars" },
+    { property: "og:description", content: "A site dedicated to Starwars" },
+    { property: "og:image", content: "/img/yoda.jpeg" },
+  ],
+});
+</script>
 <template>
   <div class="bg-darth h-screen">
     <section class="py-20 md:py-40 bg-darth">

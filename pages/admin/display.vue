@@ -6,10 +6,10 @@ import {
   IStarship,
   IVehicle,
 } from "nuxt-swapi/dist/runtime/types";
+const displayFilm = ref<IFilm | null>();
 const route = useRoute();
 const { films, people, vehicles, species, starships, planets } =
   useStarWarsApiState();
-const displayFilm = ref<IFilm | null>();
 const displayCharacters = ref();
 const displayPlanet = ref();
 const displayStarship = ref();
@@ -25,6 +25,18 @@ onMounted(() => {
   displayFilm.value = films.value.find(
     (film) => film?.episode_id.toString() === route.query.id?.toString(),
   );
+  useHead({
+    title: "Star Wars - Display Page",
+    meta: [
+      { name: "description", content: "A site dedicated to Starwars" },
+      { property: "og:title", content: "Star Wars" },
+      { property: "og:description", content: "A site dedicated to Starwars" },
+      {
+        property: "og:image",
+        content: `/img/${displayFilm.value?.title.replace(/\s+/g, "_")}.jpg`,
+      },
+    ],
+  });
   if (!displayFilm.value) {
     throw createError({
       statusCode: 404,
