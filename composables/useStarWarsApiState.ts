@@ -13,27 +13,30 @@ export default function useStarWarsApiState() {
   const films = useStorage<(IFilm | null)[]>("star_wars_films", []);
   const options = useStorage<Options>("options", {});
 
-  const intersection = <T extends Record<string, unknown>>(
-    ...objects: T[]
-  ): T => {
-    if (objects.length === 1) {
-      return objects[0];
+  const intersection = (...urls: Options[]) => {
+    if (urls.length === 1) {
+      return urls[0];
     }
-    const result: Partial<T> = {};
-    const [firstObject, ...restObjects] = objects;
+    if (urls.length === 0) {
+      return {};
+    }
+    const result: Options = {};
+    const [firstObject, ...restArray] = urls;
 
-    for (const key in firstObject) {
-      if (restObjects.every((obj) => key in obj)) {
-        result[key] = firstObject[key];
+    for (const selection of restArray) {
+      for (const item of Object.keys(selection)) {
+        if (firstObject[item]) {
+          result[item] = item;
+        }
       }
     }
-    return result as T;
+    return result;
   };
 
   const urls = computed(() => {
     const planetUrls: Options = {};
     const peopleUrls: Options = {};
-    const object: any[] = [];
+    const urls: any[] = [];
     if ("Planets" in options.value && planets.value.length > 0) {
       const items = planets.value
         .filter((value) => value.name === options.value.Planets)
@@ -43,7 +46,7 @@ export default function useStarWarsApiState() {
           planetUrls[film as string] = film;
         }
       }
-      object.push(planetUrls);
+      urls.push(planetUrls);
     }
     if ("People" in options.value && people.value.length > 0) {
       const items = people.value
@@ -54,10 +57,10 @@ export default function useStarWarsApiState() {
           peopleUrls[film as string] = film;
         }
       }
-      object.push(peopleUrls);
+      urls.push(peopleUrls);
     }
 
-    return Object.keys(intersection(...object));
+    return Object.keys(intersection(...urls));
   });
 
   const selectDynamicData = computed(() => {
@@ -92,9 +95,6 @@ export default function useStarWarsApiState() {
   });
 
   const filteredFilms = computed(() => {
-    if (urls.value.length === 0) {
-      return films.value;
-    }
     if (films.value.length > 0) {
       return films.value.filter((item) =>
         urls.value.includes(item?.url === undefined ? "" : item.url),
