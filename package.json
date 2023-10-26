@@ -27,7 +27,7 @@
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "nuxt-swapi": "^1.0.18",
+    "nuxt-swapi": "^1.0.28",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   }

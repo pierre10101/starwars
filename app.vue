@@ -17,6 +17,8 @@ useHead({
     },
   ],
 });
+const { loadData } = useStarWarsApiActions();
+process.server && (await loadData());
 </script>
 <template>
   <div>

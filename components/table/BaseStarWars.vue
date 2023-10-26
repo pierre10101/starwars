@@ -1,11 +1,6 @@
 <script setup lang="ts">
 const { selectDynamicData, isLoading } = useStarWarsApiState();
-const { loadData, selectDynamicOption, reload } = useStarWarsApiActions();
-
-onMounted(async () => {
-  await loadData();
-  isLoading.value = false;
-});
+const { selectDynamicOption, reload } = useStarWarsApiActions();
 </script>
 
 <template>

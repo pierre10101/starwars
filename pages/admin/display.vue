@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import {
-  IFilm,
   IPlanet,
   ISpecie,
   IStarship,
   IVehicle,
-} from "nuxt-swapi/dist/runtime/types";
-const displayFilm = ref<IFilm | null>();
+  IFilm,
+} from "#build/types/nuxt-swapi";
 const route = useRoute();
-const { films, people, vehicles, species, starships, planets } =
+const { people, vehicles, species, starships, planets, films } =
   useStarWarsApiState();
 const displayCharacters = ref();
 const displayPlanet = ref();
@@ -21,10 +20,23 @@ const displayStarshipIndex = ref(0);
 const displaySpeciesIndex = ref(0);
 const displayVehiclesIndex = ref(0);
 
-onMounted(() => {
-  displayFilm.value = films.value.find(
+const displayFilm = computed(() => {
+  const result = films.value.find(
     (film) => film?.episode_id.toString() === route.query.id?.toString(),
   );
+  if (result) {
+    return result;
+  }
+  return {
+    characters: [],
+    planets: [],
+    species: [],
+    starships: [],
+    title: "_",
+  } as unknown as IFilm;
+});
+
+onMounted(() => {
   useHead({
     title: `Star Wars - ${displayFilm.value?.title}`,
     meta: [
@@ -47,36 +59,56 @@ onMounted(() => {
       },
     ],
   });
-  if (!displayFilm.value) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: "Cannot find the Movie",
-    });
-  }
+  // if (!displayFilm.value) {
+  //   throw createError({
+  //     statusCode: 404,
+  //     statusMessage: "Cannot find the Movie",
+  //   });
+  // }
   displayCharacters.value = displayFilm.value.characters.map((character) => {
-    return people.value.find((person) => {
+    const result = people.value.find((person) => {
       return person.url === character;
     });
+    if (result) {
+      return result;
+    }
+    return [];
   });
   displayPlanet.value = displayFilm.value.planets.map((planet) => {
-    return planets.value.find((celestial) => {
+    const result = planets.value.find((celestial) => {
       return celestial.url === planet;
     });
+    if (result) {
+      return result;
+    }
+    return [];
   });
   displayStarship.value = displayFilm.value.starships.map((starship) => {
-    return starships.value.find((ship) => {
+    const result = starships.value.find((ship) => {
       return ship.url === starship;
     });
+    if (result) {
+      return result;
+    }
+    return [];
   });
   displaySpecies.value = displayFilm.value.species.map((specie) => {
-    return species.value.find((animal) => {
+    const result = species.value.find((animal) => {
       return animal.url === specie;
     });
+    if (result) {
+      return result;
+    }
+    return [];
   });
   displayVehicles.value = displayFilm.value.vehicles.map((vehicle) => {
-    return vehicles.value.find((car) => {
+    const result = vehicles.value.find((car) => {
       return car.url === vehicle;
     });
+    if (result) {
+      return result;
+    }
+    return [];
   });
 });
 
@@ -99,7 +131,10 @@ const calculateVehicles = computed(() => {
 
 <template>
   <section class="relative py-20 bg-darth overflow-x-hidden">
-    <div class="container mx-auto px-4">
+    <div
+      v-if="displayFilm.characters.length > 0"
+      class="container mx-auto px-4"
+    >
       <div class="relative flex mb-20 flex-wrap bg-white">
         <div
           class="hidden md:block absolute top-1/2 left-0 w-64 h-2/3 -ml-6 transform -translate-y-1/2 bg-starwars-yellow"
@@ -133,7 +168,10 @@ const calculateVehicles = computed(() => {
     </div>
 
     <!-- Exstras -->
-    <section class="flex flex-row flex-wrap lg:justify-start sm:justify-center">
+    <section
+      v-if="displayFilm.characters.length > 0"
+      class="flex flex-row flex-wrap lg:justify-start sm:justify-center"
+    >
       <div class="lg:w-1/2 w-full mt-16 px-4">
         <div class="flex mb-20 justify-center bg-white">
           <div class="w-full md:w-1/2 lg:w-2/3 p-6 self-center">
@@ -591,7 +629,7 @@ const calculateVehicles = computed(() => {
         </div>
       </div>
     </section>
-    <div class="text-center">
+    <div v-if="displayFilm.characters.length > 0" class="text-center">
       <NuxtLink
         class="inline-block bg-transparent border border-starwars-yellow text-starwars-yellow font-bold font-heading py-5 px-8 rounded-md uppercase"
         to="/admin"

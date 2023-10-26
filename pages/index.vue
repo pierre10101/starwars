@@ -18,10 +18,6 @@ useHead({
   ],
 });
 const isIntro = ref(true);
-const { loadData } = useStarWarsApiActions();
-onMounted(() => {
-  loadData();
-});
 </script>
 
 <template>

@@ -1,4 +1,3 @@
-import { useStorage } from "@vueuse/core";
 import {
   IFilm,
   IPeople,
@@ -6,19 +5,19 @@ import {
   ISpecie,
   IStarship,
   IVehicle,
-} from "nuxt-swapi/dist/runtime/types";
+} from "#build/types/nuxt-swapi";
 export default function useStarWarsApiState() {
   interface Options {
     [key: string]: unknown;
   }
-  const isLoading = useState("is-loaded", () => true);
-  const people = useStorage<IPeople[]>("star_wars_people", []);
-  const species = useStorage<ISpecie[]>("star_wars_species", []);
-  const planets = useStorage<IPlanet[]>("star_wars_planets", []);
-  const starships = useStorage<IStarship[]>("star_wars_starships", []);
-  const vehicles = useStorage<IVehicle[]>("star_wars_vehicles", []);
-  const films = useStorage<(IFilm | null)[]>("star_wars_films", []);
-  const options = useStorage<Options>("options", {});
+  const isLoading = useState("is-loaded", () => false);
+  const people = useState<IPeople[]>("star_wars_people", () => []);
+  const species = useState<ISpecie[]>("star_wars_species", () => []);
+  const planets = useState<IPlanet[]>("star_wars_planets", () => []);
+  const starships = useState<IStarship[]>("star_wars_starships", () => []);
+  const vehicles = useState<IVehicle[]>("star_wars_vehicles", () => []);
+  const films = useState<(IFilm | null)[]>("star_wars_films", () => []);
+  const options = useState<Options>("options", () => ({}));
 
   const intersection = (...urls: Options[]) => {
     if (urls.length === 1) {

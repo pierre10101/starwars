@@ -7,8 +7,5 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  experimental: {
-    asyncContext: true,
-  },
   modules: ["@nuxtjs/tailwindcss", "nuxt-swapi", "@vueuse/nuxt"],
 });
