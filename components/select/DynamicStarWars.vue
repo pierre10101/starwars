@@ -33,12 +33,12 @@ const selected = useStorage<string[]>("selected_item_star_wars", [
           >
         </div>
         <div>
-          <div class="flex flex-row">
+          <div class="flex lg:flex-nowrap lg:space-x-3 flex-wrap">
             <select
               v-for="(selectOption, selectIndex) in selectData"
               :key="selectIndex"
               v-model="selected[selectIndex]"
-              class="border border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow w-full p-3 text-md font-semibold bg-transparent cursor-pointer outline-none appearance-none"
+              class="border w-32 border-starwars-yellow blur:border-starwars-yellow text-starwars-yellow p-3 text-md font-semibold bg-transparent cursor-pointer outline-none appearance-none"
               @change="emit('option', $event.target)"
             >
               <option class="bg-starwars-yellow" disabled value="" selected>
