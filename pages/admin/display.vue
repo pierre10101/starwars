@@ -272,7 +272,9 @@ const calculateVehicles = computed(() => {
           <div class="w-full md:w-1/2 lg:w-2/3 p-6 self-center">
             <div class="max-w-lg mx-auto">
               <div class="mb-2 pb-2 border-b flex flex-row space-x-2">
-                <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">Planets</h2>
+                <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">
+                  Planets
+                </h2>
                 <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">
                   {{ calculatePlanets.name }}
                 </h2>
@@ -361,7 +363,9 @@ const calculateVehicles = computed(() => {
           <div class="w-full md:w-1/2 lg:w-2/3 p-6 self-center">
             <div class="max-w-lg mx-auto">
               <div class="mb-2 pb-2 border-b flex flex-row space-x-2">
-                <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">Species</h2>
+                <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">
+                  Species
+                </h2>
                 <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">
                   {{ calculateSpecies.name }}
                 </h2>
@@ -454,7 +458,9 @@ const calculateVehicles = computed(() => {
           <div class="w-full md:w-1/2 lg:w-2/3 p-6 self-center">
             <div class="max-w-lg mx-auto">
               <div class="mb-2 pb-2 border-b flex flex-row space-x-2">
-                <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">Vehicles</h2>
+                <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">
+                  Vehicles
+                </h2>
                 <h2 class="mb-2 lg:text-3xl text-lg font-bold font-heading">
                   {{ calculateVehicles.name }}
                 </h2>
