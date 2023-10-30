@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { calculateDisplay } = defineProps(["calculateDisplay"]);
+const { calculateDisplay } = defineProps<{
+  calculateDisplay: {
+    name: string;
+  };
+}>();
 const emits = defineEmits(["decrementIndex", "incrementIndex"]);
 </script>
 <template>

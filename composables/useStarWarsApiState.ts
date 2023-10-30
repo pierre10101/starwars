@@ -1,4 +1,4 @@
-import {
+import type {
   IFilm,
   IPeople,
   IPlanet,
@@ -16,7 +16,7 @@ export default function useStarWarsApiState() {
   const planets = useState<IPlanet[]>("star_wars_planets", () => []);
   const starships = useState<IStarship[]>("star_wars_starships", () => []);
   const vehicles = useState<IVehicle[]>("star_wars_vehicles", () => []);
-  const films = useState<(IFilm | null)[]>("star_wars_films", () => []);
+  const films = useState<IFilm[]>("star_wars_films", () => []);
   const options = useState<Options>("options", () => ({}));
 
   const intersection = (...urls: Options[]) => {

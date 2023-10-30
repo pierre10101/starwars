@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { loadData } = useStarWarsApiActions();
+process.server && (await useAsyncData("data", async () => await loadData()));
 useHead({
   title: "Star Wars - HomePage",
   meta: [
@@ -16,19 +18,6 @@ useHead({
       content: "https://starwars.coffee.gives/",
     },
   ],
-});
-const { loadData } = useStarWarsApiActions();
-const runtimeConfig = useRuntimeConfig();
-const { isLoading } = useStarWarsApiState();
-if (runtimeConfig.ENV !== "development") {
-  process.server && (await loadData());
-}
-onMounted(async () => {
-  if (runtimeConfig.public.ENV === "development") {
-    isLoading.value = true;
-    await loadData();
-    isLoading.value = false;
-  }
 });
 </script>
 <template>

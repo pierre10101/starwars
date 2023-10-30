@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IFilm } from "#build/types/nuxt-swapi";
+import type { IFilm } from "#build/types/nuxt-swapi";
 
 const route = useRoute();
 const { planets, films } = useStarWarsApiState();
