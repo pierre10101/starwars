@@ -14,10 +14,13 @@ const emit = defineEmits(["click"]);
     class="cursor-pointer bg-transparent text-starwars-yellow text-xs font-normal mb-4"
   >
     <tr class="flex flex-wrap w-full items-center">
-      <th v-for="(title, index) in headings" :key="index" class="px-3">
-        <div class="h-16 pl-8 hover:opacity-25" @click="emit('click', title)">
-          <span>{{ title }}</span>
-        </div>
+      <th
+        v-for="(title, index) in headings"
+        :key="index"
+        class="hover:text-white px-4 py-2 h-12 text-center inline-flex items-center border border-starwars-yellow"
+        @click="emit('click', title)"
+      >
+        {{ title }}
       </th>
     </tr>
   </thead>
