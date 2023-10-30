@@ -17,12 +17,22 @@ useHead({
     },
   ],
 });
+const { filteredFilms, isLoading, selectDynamicData } = useStarWarsApiState();
+const { reload, selectDynamicOption } = useStarWarsApiActions();
 </script>
 <template>
   <div class="bg-darth h-screen">
     <section class="py-20 md:py-40 bg-darth">
-      <div class="container px-4 mx-auto">
-        <table-base-star-wars />
+      <div class="container px-4 mx-auto flex flex-col">
+        <loader-darth-vader v-if="isLoading" />
+        <select-dynamic-star-wars
+          :select-data="selectDynamicData"
+          @option="selectDynamicOption"
+          @reset="reload()"
+        />
+        <div class="flex flex-row flex-wrap justify-center">
+          <card-star-wars-film :filtered-films="filteredFilms" />
+        </div>
       </div>
     </section>
   </div>

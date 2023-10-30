@@ -18,7 +18,18 @@ useHead({
   ],
 });
 const { loadData } = useStarWarsApiActions();
-process.server && (await loadData());
+const runtimeConfig = useRuntimeConfig();
+const { isLoading } = useStarWarsApiState();
+if (runtimeConfig.ENV !== "development") {
+  process.server && (await loadData());
+}
+onMounted(async () => {
+  if (runtimeConfig.public.ENV === "development") {
+    isLoading.value = true;
+    await loadData();
+    isLoading.value = false;
+  }
+});
 </script>
 <template>
   <div>

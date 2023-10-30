@@ -6,20 +6,16 @@ interface Props {
 const { headings } = withDefaults(defineProps<Props>(), {
   headings: () => ["Director", "Release Date", "Description"],
 });
+const emit = defineEmits(["click"]);
 </script>
 
 <template>
   <thead
-    class="border border-starwars-yellow bg-transparent text-starwars-yellow text-xs font-normal"
+    class="cursor-pointer bg-transparent text-starwars-yellow text-xs font-normal mb-4"
   >
-    <tr>
-      <th class="p-0">
-        <div class="h-16 pl-8 pr-6 flex items-center rounded-tl-xl">
-          <span class="ml-4 text-lg font-semibold">Name</span>
-        </div>
-      </th>
-      <th v-for="(title, index) in headings" :key="index" class="p-0">
-        <div class="h-16 pl-8 flex items-center">
+    <tr class="flex flex-wrap w-full items-center">
+      <th v-for="(title, index) in headings" :key="index" class="px-3">
+        <div class="h-16 pl-8 hover:opacity-25" @click="emit('click', title)">
           <span>{{ title }}</span>
         </div>
       </th>

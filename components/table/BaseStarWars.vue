@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { selectDynamicData, isLoading } = useStarWarsApiState();
+const { selectDynamicData, isLoading, filteredFilms } = useStarWarsApiState();
 const { selectDynamicOption, reload } = useStarWarsApiActions();
 </script>
 
@@ -14,7 +14,7 @@ const { selectDynamicOption, reload } = useStarWarsApiActions();
   <div class="w-full overflow-x-auto">
     <table class="w-full min-w-max">
       <table-head-star-wars />
-      <table-body-star-wars />
+      <table-body-star-wars :filtered-films="filteredFilms" />
     </table>
   </div>
 </template>

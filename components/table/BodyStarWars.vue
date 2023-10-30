@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { filteredFilms } = useStarWarsApiState();
+import { IFilm } from "#build/types/nuxt-swapi";
+
+const { filteredFilms } = defineProps<{
+  filteredFilms: (IFilm | null)[];
+}>();
 </script>
 
 <template>

@@ -19,8 +19,12 @@ const displayFilm = computed(() => {
   } as unknown as IFilm;
 });
 
+const extra = computed(() => {
+  return route.query?.extra;
+});
+
 useHead({
-  title: `Star Wars - ${displayFilm.value?.title}`,
+  title: `Star Wars - extra info - ${displayFilm.value?.title}`,
   meta: [
     { name: "title", property: "og:title", content: "Star Wars" },
     { name: "type", property: "og:type", content: "website" },
@@ -63,49 +67,32 @@ useHead({
         <div class="w-full md:w-1/2 lg:w-2/3 p-6 self-center">
           <div class="max-w-lg mx-auto">
             <div class="mb-10 pb-10 border-b">
-              <h2 class="mb-2 text-3xl font-bold font-heading">
-                {{ displayFilm?.title }}
+              <h2 class="mb-2 text-center text-3xl font-bold font-heading">
+                {{ extra?.toString().toUpperCase() }}
               </h2>
             </div>
-            <p class="mb-12 md:mb-20 text-lg text-gray-500">
-              {{ displayFilm?.opening_crawl }}
-            </p>
-            <div class="flex flex-wrap items-center">
-              <p class="font-bold font-heading text-gray-800">
-                <span class="text-ms italic text-gray-500">Producer -</span>
-                {{ displayFilm?.producer }}
-              </p>
+            <div
+              v-if="displayFilm.characters.length > 0"
+              class="w-full lg:overflow-x-hidden overflow-x-scroll"
+            >
+              <list-star-wars-characters v-if="extra === 'characters'" />
+              <list-star-wars-planets v-else-if="extra === 'planets'" />
+              <list-star-wars-species v-else-if="extra === 'species'" />
+              <list-star-wars-vehicles v-else-if="extra === 'vehicles'" />
+              <list-star-wars-starships v-else-if="extra === 'starships'" />
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Exstras -->
-    <section
-      v-if="displayFilm.characters.length > 0"
-      class="flex justify-center container px-6 mx-auto bg-transparent"
-    >
-      <table-head-star-wars
-        :headings="[
-          'characters',
-          'planets',
-          'vehicles',
-          'starships',
-          'species',
-        ]"
-        @click="
-          $router.push(
-            `/admin/extra-info?id=${displayFilm.episode_id}&extra=${$event}`,
-          )
-        "
-      />
-    </section>
     <div v-if="displayFilm.characters.length > 0" class="text-center">
-      <NuxtLink
-        class="inline-block bg-transparent border border-starwars-yellow text-starwars-yellow font-bold font-heading py-5 px-8 rounded-md uppercase"
-        to="/admin"
-        >Back</NuxtLink
+      <div
+        class="cursor-pointer inline-block bg-transparent border border-starwars-yellow text-starwars-yellow font-bold font-heading py-5 px-8 rounded-md uppercase"
+        @click="$router.go(-1)"
+      >
+        Back
+      </div>
       >
     </div>
   </section>
