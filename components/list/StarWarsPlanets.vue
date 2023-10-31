@@ -36,7 +36,16 @@ onMounted(() => {
 });
 
 const calculateDisplay = computed(() => {
-  return display.value[index.value];
+  const result = Object.entries(display.value[index.value]).reduce(
+    (acc: any, [key, value]) => {
+      if (!String(value).includes("https://") && !Array.isArray(value)) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {},
+  );
+  return result;
 });
 
 const decrementIndex = () => {
@@ -51,6 +60,7 @@ const incrementIndex = () => {
 <template>
   <card-star-wars-extra
     :calculate-display="calculateDisplay"
+    :display-film="displayFilm"
     @increment-index="incrementIndex()"
     @decrement-index="decrementIndex()"
   />

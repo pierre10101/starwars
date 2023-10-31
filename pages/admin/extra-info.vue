@@ -71,7 +71,7 @@ useHead({
     />
     <div v-if="displayFilm.characters.length > 0" class="text-center">
       <div
-        class="cursor-pointer inline-block bg-transparent border border-starwars-yellow text-starwars-yellow font-bold font-heading py-5 px-8 rounded-md uppercase"
+        class="cursor-pointer mt-6 inline-block bg-transparent border border-starwars-yellow text-starwars-yellow font-bold font-heading py-5 px-8 rounded-md uppercase"
         @click="$router.go(-1)"
       >
         Back

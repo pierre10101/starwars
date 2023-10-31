@@ -30,7 +30,7 @@ const { reload, selectDynamicOption } = useStarWarsApiActions();
           @option="selectDynamicOption"
           @reset="reload()"
         />
-        <div class="flex flex-row flex-wrap justify-center">
+        <div class="flex flex-row flex-wrap justify-evenly">
           <card-star-wars-film :filtered-films="filteredFilms" />
         </div>
       </div>
