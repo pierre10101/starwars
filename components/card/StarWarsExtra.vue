@@ -1,71 +1,54 @@
 <script setup lang="ts">
-const { calculateDisplay } = defineProps<{
+const { calculateDisplay, displayFilm } = defineProps<{
   calculateDisplay: {
     name: string;
   };
+  displayFilm: {
+    title: string;
+  };
 }>();
-const emits = defineEmits(["decrementIndex", "incrementIndex"]);
+const emit = defineEmits(["decrementIndex", "incrementIndex"]);
 </script>
 <template>
-  <div class="text-center py-4">
-    <h2 class="text-2xl font-bold">{{ calculateDisplay.name }}</h2>
-  </div>
-  <div class="cursor-pointer card-header mx-auto flex justify-center py-6">
-    <div
-      class="mr-4 flex items-center justify-center w-12 h-12 bg-black hover:opacity-75 rounded-md"
-      @click="emits('decrementIndex')"
-    >
-      <svg
-        width="8"
-        height="12"
-        viewBox="0 0 8 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3.02344 5.99748L7.14844 10.1225L5.97043 11.3008L0.66742 5.99748L5.97043 0.694179L7.14844 1.87248L3.02344 5.99748Z"
-          fill="white"
-        ></path>
-      </svg>
-    </div>
-    <div
-      class="flex items-center justify-center w-12 h-12 bg-starwars-yellow hover:opacity-75 rounded-md"
-      @click="emits('incrementIndex')"
-    >
-      <svg
-        width="8"
-        height="12"
-        viewBox="0 0 8 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4.97656 6.00252L0.851562 1.87752L2.02957 0.699219L7.33258 6.00252L2.02957 11.3058L0.851562 10.1275L4.97656 6.00252Z"
-          fill="white"
-        ></path>
-      </svg>
-    </div>
-  </div>
-  <div class="card-container w-full mx-auto">
-    <div class="card-info bg-white text-justify w-full">
-      <table class="table-auto mx-auto w-full">
-        <tbody>
-          <tr v-for="(value, key) in calculateDisplay" :key="key">
-            <td
-              v-if="!Array.isArray(value) && !value?.includes('https://')"
-              class="py-2 px-4"
+  <section class="text-gray-600 body-font overflow-hidden">
+    <div class="container px-5 py-24 mx-auto bg-white">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap">
+        <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+          <h2 class="text-sm title-font text-gray-500 tracking-widest">
+            {{ displayFilm.title }}
+          </h2>
+          <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
+            {{ calculateDisplay.name }}
+          </h1>
+          <div class="flex mb-4 overflow-x-auto">
+            <div
+              class="cursor-pointer flex-grow text-black border-b-2 border-starwars-yellow py-2 text-lg px-1"
+              @click="emit('decrementIndex')"
             >
-              <strong>{{ key }}:</strong>
-            </td>
-            <td
-              v-if="!Array.isArray(value) && !value?.includes('https://')"
-              class="py-2 px-4"
+              Previous
+            </div>
+            <div
+              class="cursor-pointer flex-grow text-black border-b-2 border-starwars-yellow py-2 text-lg px-1"
+              @click="emit('incrementIndex')"
             >
-              {{ value?.includes("000Z") ? value?.split("T")[0] : value }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              Next
+            </div>
+          </div>
+          <div
+            v-for="(item, index) in calculateDisplay"
+            :key="index"
+            class="flex border-t border-gray-200 py-2"
+          >
+            <span class="text-gray-500">{{ index }}</span>
+            <span class="ml-auto text-gray-900">{{ item }}</span>
+          </div>
+        </div>
+        <img
+          alt="ecommerce"
+          class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+          :src="`/img/${displayFilm?.title.replace(/\s+/g, '_')}.jpg`"
+        />
+      </div>
     </div>
-  </div>
+  </section>
 </template>
